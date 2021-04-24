@@ -1,5 +1,0 @@
-#Hello!!
-
-# Tchau!
-
-# Bruno
