@@ -13,9 +13,15 @@ import('read.dbc')
 # Contabiliza o total de observações por UF
 export('total')
 total <- function(uf) {
-  soma <- dim(read.dbc(paste('dados/DN', uf, '2016.dbc', sep = '')))[1]
-  print(paste(uf, 'tem', soma,  'registros.'))
-  return(soma)
+  # Leitura do DBC para a UF, caso já não esteja carregado.
+  if (!exists(uf, envir = .GlobalEnv)) {
+    assign(uf, read.dbc(paste0('dados/DN', uf, '2016.dbc')), envir = .GlobalEnv)
+  }
+  # Leitura das observações
+  observacoes <- dim(get(uf,  envir = .GlobalEnv))[1]
+  # Feedback ao usuário
+  cat('-->', uf, 'tem', observacoes,  'observações.', '\n')
+  return(observacoes)
 }
 
 # Pega amostras para determinada UF
@@ -30,21 +36,29 @@ total <- function(uf) {
 # Logo, apenas nos interessa amostras dos registros cuso campo LOCNASC = 1
 export('amostra')
 amostra <- function(uf, amostra) {
-  # Le a base de dados
-  df <- read.dbc(paste('dados/DN', uf, '2016.dbc', sep = ''))
+  # Leitura do DBC para a UF, caso já não esteja carregado.
+  if (!exists(uf, envir = .GlobalEnv)) {
+    assign(uf, read.dbc(paste0('dados/DN', uf, '2016.dbc')), envir = .GlobalEnv)
+  }
   # Filtra apenas os nascidos em hospitais, sem NAs
-  df <- subset(df, df$LOCNASC == 1)
-  # Faz a amostragem
-  df <- df[sample(df$contador, amostra),]
+  aux <- get(uf, envir = .GlobalEnv)[
+    get(uf, envir = .GlobalEnv)$LOCNASC == 1,
+  ]
+  # Exibe informação dos dados filtrados para ver se está certo
+  cat('-->', uf, '- processando', amostra, 'amostras', '\t',
+      summary(aux$LOCNASC), '\n')
+  # Faz a amostragem``
+  spl <- aux[sample(aux$contador, amostra),]
   # Mostra progresso
-  print(paste(uf, '- processando', amostra, 'amostras.'))
-  # Retorna o resultado
-  return(df)
+  # Retorna o sample
+  return(spl)
 }
 
-# Contabiliza o total de observações por UF
-export('fator')
-fator <- function(df, niveis, classes) {
-  return(factor(df, label = classes, levels = niveis))
-}
+# Verificação do dataframe
+export('verifica')
+verifica <- function(df) {
+  print('--> Número de observações....:', dim(df)[1])
+  print('--> Número de atributos......:', dim(df)[2])
+  print('--> Número de LOCNASC = 1 ...:', dim(df)[2])
 
+}
