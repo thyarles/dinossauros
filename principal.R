@@ -6,10 +6,10 @@
 # > Computação em Estatística 1...: Luis Gustavo Vinha (luisvinha@unb.br)
 
 # Discentes
-# > xxxxxxxxx Bruno Marques Ribeiro
+# > 202043666 Bruno Marques Ribeiro
 # > 202046003 Charles Henrique Gonçalves Santos
-# > xxxxxxxxx Diogo Pereira Almeida
-# > xxxxxxxxx Rafael Ribeiro Araújo
+# > 202046621 Diogo Pereira Almeida
+# > 202046541 Rafael Ribeiro Araújo
 
 # Instala caso necessário e carrega pacotes para a solução do problema
 # ------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ print('Calculando amostra proporcional para cada UF (2000 no total)...')
 
 # Configura SEED para 1234 para que o estudo seja repetido em outras máquinas
 # ------------------------------------------------------------------------------
-print('Configrando o SEED para 1234...')
+print('Configurando o SEED para 1234...')
   set.seed(1234)
 
 
