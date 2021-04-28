@@ -13,14 +13,22 @@ import('read.dbc')
 # Contabiliza o total de observações por UF
 export('total')
 total <- function(uf) {
+
+  # Inicia feedback ao usuario
+  cat('-->', uf, 'tem ')
+
   # Leitura do DBC para a UF, caso já não esteja carregado.
   if (!exists(uf, envir = .GlobalEnv)) {
     assign(uf, read.dbc(paste0('dados/DN', uf, '2016.dbc')), envir = .GlobalEnv)
   }
+
   # Leitura das observações
   observacoes <- dim(get(uf,  envir = .GlobalEnv))[1]
-  # Feedback ao usuário
-  cat('-->', uf, 'tem', observacoes,  'observações.', '\n')
+
+  # Finaliza feedback ao usuario
+  cat(observacoes,  'observações.', '\n')
+
+  # Retorna resultado
   return(observacoes)
 }
 
@@ -34,31 +42,38 @@ total <- function(uf) {
 #   3: Domicílio
 #   4: Outros
 # Logo, apenas nos interessa amostras dos registros cuso campo LOCNASC = 1
+
 export('amostra')
 amostra <- function(uf, amostra) {
+
   # Leitura do DBC para a UF, caso já não esteja carregado.
   if (!exists(uf, envir = .GlobalEnv)) {
     assign(uf, read.dbc(paste0('dados/DN', uf, '2016.dbc')), envir = .GlobalEnv)
   }
+
   # Filtra apenas os nascidos em hospitais, sem NAs
   aux <- get(uf, envir = .GlobalEnv)[
     get(uf, envir = .GlobalEnv)$LOCNASC == 1,
   ]
+
   # Exibe informação dos dados filtrados para ver se está certo
-  cat('-->', uf, '- processando', amostra, 'amostras', '\t',
-      summary(aux$LOCNASC), '\n')
-  # Faz a amostragem``
-  spl <- aux[sample(aux$contador, amostra),]
-  # Mostra progresso
-  # Retorna o sample
+  cat('-->', uf, '- processando', amostra, 'amostras', '\n')
+
+  # Calcula amostras da UF baseado no número de amostras
+  spl_contador <- sample(aux$contador, amostra)
+
+  # Seleciona registros da amostragem
+  spl <- aux[aux$contador %in% spl_contador, ]
+
+  # Retorna resultado
   return(spl)
 }
 
 # Verificação do dataframe
 export('verifica')
 verifica <- function(df) {
-  print('--> Número de observações....:', dim(df)[1])
-  print('--> Número de atributos......:', dim(df)[2])
-  print('--> Número de LOCNASC = 1 ...:', dim(df)[2])
-
+  cat('--> Número de observações....:', dim(df)[1], '\n')
+  cat('--> Número de atributos......:', dim(df)[2], '\n')
+  cat('--> Sumário do LOCNASC:', '\n')
+  summary(df$LOCNASC)
 }
