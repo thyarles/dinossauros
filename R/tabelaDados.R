@@ -65,6 +65,9 @@ amostra <- function(uf, amostra) {
   # Seleciona registros da amostragem
   spl <- aux[aux$contador %in% spl_contador, ]
 
+  # Adiciona UF para possibilitar filtragens futuras por UF na Amostra
+  spl$UF <- uf
+
   # Retorna resultado
   return(spl)
 }
@@ -74,6 +77,6 @@ export('verifica')
 verifica <- function(df) {
   cat('--> Número de observações....:', dim(df)[1], '\n')
   cat('--> Número de atributos......:', dim(df)[2], '\n')
-  cat('--> Sumário do LOCNASC:', '\n')
-  summary(df$LOCNASC)
+  cat('--> Amostras por UF:')
+  table(df$UF)
 }
