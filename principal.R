@@ -87,3 +87,5 @@ print('Limpando e otimizando memória...')
 # Imprime resultados (apagar, só para conferência momentânea)
 # ------------------------------------------------------------------------------
 sinasc$tabelaDados$verifica(AMOSTRA)
+
+sinasc$graficos$boxplot(10, 20)
