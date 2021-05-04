@@ -84,9 +84,9 @@ print('Limpando e otimizando memória...')
   remove(list = as.character(UF$SIGLA_UF))
 
 
-# Imprime resultados (apagar, só para conferência momentânea)
+# Formata campos de acordo com a Estrutura do SINASC que acompanhou o BD
 # ------------------------------------------------------------------------------
-sinasc$tabelaDados$verifica(AMOSTRA)
+AMOSTRA <- sinasc$dicionario$aplicaEstrutura(AMOSTRA)
 
 
 #-----------------------------------------------------------
