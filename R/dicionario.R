@@ -32,6 +32,9 @@ aplicaEstrutura <- function(df) {
   # IDADEMAE: Inteiro
   df$IDADEMAE <- as.integer(df$IDADEMAE)
 
+  # IDADEPAI: Inteiro
+  df$IDADEPAI <- as.integer(df$IDADEPAI)
+
   # ESTCIVMAE: Fator
   df$ESTCIVMAE <- factor(df$ESTCIVMAE, levels = c(1:5, 9), labels = c('Solteira',
                                                                       'Casada',
