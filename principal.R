@@ -8,8 +8,8 @@
 # Discentes
 # > 202043666 Bruno Marques Ribeiro
 # > 202046003 Charles Henrique Gonçalves Santos
-# > 202046621 Diogo Pereira Almeida
-# > 202046541 Rafael Ribeiro Araújo
+# > xxxxxxxxx Diogo Pereira Almeida
+# > xxxxxxxxx Rafael Ribeiro Araújo
 
 # Instala caso necessário e carrega pacotes para a solução do problema
 # ------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ print('Calculando amostra proporcional para cada UF (2000 no total)...')
 
 # Configura SEED para 1234 para que o estudo seja repetido em outras máquinas
 # ------------------------------------------------------------------------------
-print('Configurando o SEED para 1234...')
+print('Configrando o SEED para 1234...')
   set.seed(1234)
 
 
@@ -84,8 +84,61 @@ print('Limpando e otimizando memória...')
   remove(list = as.character(UF$SIGLA_UF))
 
 
-# Imprime resultados (apagar, só para conferência momentânea)
+# Formata campos de acordo com a Estrutura do SINASC que acompanhou o BD
 # ------------------------------------------------------------------------------
-sinasc$tabelaDados$verifica(AMOSTRA)
+AMOSTRA <- sinasc$dicionario$aplicaEstrutura(AMOSTRA)
 
-sinasc$graficos$boxplot(10, 20)
+
+#-----------------------------------------------------------
+
+amostra_sem_NA <- AMOSTRA[,c('DTNASCMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
+  amostra_sem_NA <- amostra_sem_NA[(!is.na(amostra_sem_NA$PARTO)) &
+                                     (!is.na(amostra_sem_NA$DTNASCMAE))&
+                                     (!is.na(amostra_sem_NA$ESCMAE)) &
+                                     (!is.na(amostra_sem_NA$RACACORMAE)),]
+
+
+  amostra_sem_NA$ESCMAE <- factor(amostra_sem_NA$ESCMAE,
+       label = c('Nenhuma',"1 a 3 anos",'4 a 7 anos',
+                 '8 a 11 anos','12 e mais', 'Ignorado'),
+       level= c(1,2,3,4,5,9))
+  amostra_sem_NA$RACACORMAE <- factor(amostra_sem_NA$RACACORMAE,
+        label = c("Branca","Preta",'Amarela','Parda','Indígena'),
+        level= 1:5)
+
+  amostra_sem_NA$PARTO <- factor(amostra_sem_NA$PARTO,
+                          label = c("Vaginal","Cesáreo",'Ignorado'),
+                          level= c(1,2,9))
+
+
+library(ggplot2)
+library(tidyverse)
+library(moments)
+
+
+
+ggplot(data = amostra_sem_NA) +
+  labs(x ="Tipo de parto", y ="Quantidade de partos")+
+  geom_bar(mapping = aes(x = PARTO, fill=PARTO))
+
+
+ggplot(data = amostra_sem_NA) +
+  labs(x ="Escolaridade da Mãe", y ="Quantidade de pessoas por classe") +
+  geom_bar(mapping = aes(x = ESCMAE, fill=ESCMAE)) +
+  coord_flip()
+
+ggplot(data = amostra_sem_NA) +
+  labs(x ="Identidade Racial", y ="Quantidade de pessoas por Raça") +
+  geom_bar(mapping = aes(x = RACACORMAE, fill=RACACORMAE))
+
+
+
+ggplot(data = amostra_sem_NA) +
+  labs(x ="Tipo de Parto", y ="Frequencia relativa") +
+  geom_bar(mapping = aes(x = ESCMAE, fill = PARTO), position = "fill")
+
+
+
+
+#write.csv(amostra_sem_NA, file = 'amostra_sem_NA.csv', fileEncoding = 'UTF-8')
+
