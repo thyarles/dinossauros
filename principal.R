@@ -145,33 +145,25 @@ print('Gerando dados para a resposta do item 1...')
   remove(PDS)
 
 
-ggplot(as.data.frame(PDS), aes(fill = PDS)) +
-  geom_col(position = 'dodge') +
-  labs(x = 'Idade dos alunos', y = 'Quantidade de alunos', fill = 'Consome inalantes?') +
-  geom_text(aes(label = Freq), colour = 'white', size = 3, vjust = 1.5, position = position_dodge(.9))
+
+#-----------------------------------------------------------
+
+
+amostra_sem_NA <- AMOSTRA[,c('DTNASCMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
+
+
+
+amostra_sem_NA <- amostra_sem_NA[(!is.na(amostra_sem_NA$PARTO)) &
+                                   (!is.na(amostra_sem_NA$DTNASCMAE))&
+                                   (!is.na(amostra_sem_NA$ESCMAE)) &
+                                   (!is.na(amostra_sem_NA$RACACORMAE)),]
+
 
 
 
 ggplot(data = amostra_sem_NA) +
   labs(x ='Tipo de parto', y ='Quantidade de partos')+
   geom_bar(mapping = aes(x = PARTO, fill=PARTO))
-
-
-
-ggplot(AMOSTRA$PARTO)
-
-
-#-----------------------------------------------------------
-
-amostra_sem_NA <- AMOSTRA[,c('DTNASCMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
-
-
-
-  amostra_sem_NA <- amostra_sem_NA[(!is.na(amostra_sem_NA$PARTO)) &
-                                     (!is.na(amostra_sem_NA$DTNASCMAE))&
-                                     (!is.na(amostra_sem_NA$ESCMAE)) &
-                                     (!is.na(amostra_sem_NA$RACACORMAE)),]
-
 
 
 
