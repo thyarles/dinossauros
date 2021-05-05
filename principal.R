@@ -11,6 +11,7 @@
 # > xxxxxxxxx Diogo Pereira Almeida
 # > xxxxxxxxx Rafael Ribeiro Araújo
 
+# ------------------------------------------------------------------------------
 # Instala caso necessário e carrega pacotes para a solução do problema
 # ------------------------------------------------------------------------------
 print('Carregando e/ou instalando bibliotecas necessárias...')
@@ -19,18 +20,17 @@ print('Carregando e/ou instalando bibliotecas necessárias...')
   if (!require('modules')) install.packages('modules')      # Leitura dos módulos
   if (!require('ggplot2')) install.packages('ggplot2')      # Plotagem de gráficos
   if (!require('lubridate')) install.packages('lubridate')  # Conversão de datas
-  #if (!require('stargazer')) install.packages('stargazer')  # Geração de tabelas
-  #library(stargazer)
   library(lubridate)
   library(ggplot2)
 
-
+# ------------------------------------------------------------------------------
 # Ativa os nossos módulos no diretório R
 # ------------------------------------------------------------------------------
 print('Carregando módulos na pasta R...')
   sinasc <- modules::use('R')
 
 
+# ------------------------------------------------------------------------------
 # Leitura das tabelas auxiliares
 # ------------------------------------------------------------------------------
 print('Carregando tabelas auxiliares...')
@@ -42,6 +42,7 @@ print('Carregando tabelas auxiliares...')
   MUNICIPIO <- sinasc$tabelaAuxiliar$municipio()
 
 
+# ------------------------------------------------------------------------------
 # Calcula número de observações por UF
 # ------------------------------------------------------------------------------
 print('Carregando e calculando observações por UF, por favor, aguarde...')
@@ -50,12 +51,14 @@ print('Carregando e calculando observações por UF, por favor, aguarde...')
   }
 
 
+# ------------------------------------------------------------------------------
 # Calcula número de amostras para cada UF
 # ------------------------------------------------------------------------------
 print('Calculando amostra proporcional para cada UF (2000 no total)...')
   UF$AMOSTRA = as.integer(round(prop.table(UF$NUM_OBS_SINASC)*2000))
 
 
+# ------------------------------------------------------------------------------
 # Tabela para formatação e uso no relatório
 # ------------------------------------------------------------------------------
 cat('\n  --> Número de observações totais e da amostra por UF\n´', '\n')
@@ -64,12 +67,14 @@ cat('\n  --> Número de observações totais e da amostra por UF\n´', '\n')
   cat('\n')
 
 
+# ------------------------------------------------------------------------------
 # Configura SEED para 1234 para que o estudo seja repetido em outras máquinas
 # ------------------------------------------------------------------------------
 print('Configrando o SEED para 1234...')
   set.seed(1234)
 
 
+# ------------------------------------------------------------------------------
 # Amostra os dados considerando os nascidos em hospitais no dataframe AMOSTRA
 # ------------------------------------------------------------------------------
 print('Salvando amostras de cada UF no dataframe AMOSTRAS...')
@@ -89,6 +94,7 @@ print('Salvando amostras de cada UF no dataframe AMOSTRAS...')
   }
 
 
+# ------------------------------------------------------------------------------
 # Limpa dataframes e variáveis não necessárias nos próximos passos
 # ------------------------------------------------------------------------------
 print('Limpando e otimizando memória...')
@@ -104,6 +110,7 @@ print('Formatando campos da amostra de acordo com dicionário de dados...')
   AMOSTRA <- sinasc$dicionario$aplicaEstrutura(AMOSTRA)
 
 
+# ------------------------------------------------------------------------------
 # Configurações do tema do GGPLOT2
 # ------------------------------------------------------------------------------
 print('Configurando o tema do GGPLOT para um padrão do trabalho...')
@@ -113,66 +120,104 @@ print('Configurando o tema do GGPLOT para um padrão do trabalho...')
 ################################################################################
 # Resposta aos itens
 ################################################################################
-cat('\n\n##### Gerando dados para a resposta da Questão 01...\n')
 
-  # 1. Pode-se dizer que o número de partos varia entre os dias da semana?
-  #    Por que?
-  # ----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 1. Pode-se dizer que o número de partos varia entre os dias da semana?
+#    Por que?
+# ----------------------------------------------------------------------------
+cat('\n\n##### Gerando dados para a resposta da Questão 01...\n')
+  sinasc <- modules::use('R')
   sinasc$q01$resposta(AMOSTRA)
 
 
+# ------------------------------------------------------------------------------
+# 2. Qual é o percentual de mães solteiras?
+#    Descrever a variável estado civil das mães.
+# ----------------------------------------------------------------------------
+cat('\n\n##### Gerando dados para a resposta da Questão 02...\n')
+  sinasc <- modules::use('R')
+  sinasc$q02$resposta(AMOSTRA)
+
+# ------------------------------------------------------------------------------
+# 3. Descrever a variável peso do recém-nascidos da amostra.
+# ----------------------------------------------------------------------------
+cat('\n\n##### Gerando dados para a resposta da Questão 03...\n')
+  sinasc <- modules::use('R')
+  sinasc$q03$resposta(AMOSTRA)
+
+# ------------------------------------------------------------------------------
+# 4. Existe relação entre o peso do recém-nascido e idade da mãe?
+#    A relação é forte?
+# ----------------------------------------------------------------------------
+cat('\n\n##### Gerando dados para a resposta da Questão 04...\n')
+  sinasc <- modules::use('R')
+  sinasc$q04$resposta(AMOSTRA)
+
+# ------------------------------------------------------------------------------
+# 5. Pode-se dizer que o tipo de parto está relacionado a seguintes variáveis?
+#    a) Idade da mãe
+#    b) Escolaridade da mãe
+#    c) Raça ou cor da mãe
+#    Se sim, como?
+# ----------------------------------------------------------------------------
+cat('\n\n##### Gerando dados para a resposta da Questão 05...\n')
+  sinasc <- modules::use('R')
+  sinasc$q05$resposta(AMOSTRA)
 
 
 
+# ------------------------------------------------------------------------------
+# Código do Bruno para aproveitamento nos gráficos
+# Descomentar para testar
 #-----------------------------------------------------------
-
-
-amostra_sem_NA <- AMOSTRA[,c('DTNASCMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
-
-
-
-amostra_sem_NA <- amostra_sem_NA[(!is.na(amostra_sem_NA$PARTO)) &
-                                   (!is.na(amostra_sem_NA$DTNASCMAE))&
-                                   (!is.na(amostra_sem_NA$ESCMAE)) &
-                                   (!is.na(amostra_sem_NA$RACACORMAE)),]
-
-
-
-
-ggplot(data = amostra_sem_NA) +
-  labs(x ='Tipo de parto', y ='Quantidade de partos')+
-  geom_bar(mapping = aes(x = PARTO, fill=PARTO))
-
-
-
-#library(ggplot2)
-library(tidyverse)
-library(moments)
-
-
-
-ggplot(data = amostra_sem_NA) +
-  labs(x ='Tipo de parto', y ='Quantidade de partos')+
-  geom_bar(mapping = aes(x = PARTO, fill=PARTO))
-
-
-ggplot(data = amostra_sem_NA) +
-  labs(x ='Escolaridade da Mãe', y ='Quantidade de pessoas por classe') +
-  geom_bar(mapping = aes(x = ESCMAE, fill=ESCMAE)) +
-  coord_flip()
-
-ggplot(data = amostra_sem_NA) +
-  labs(x ='Identidade Racial', y ='Quantidade de pessoas por Raça') +
-  geom_bar(mapping = aes(x = RACACORMAE, fill=RACACORMAE))
-
-
-
-ggplot(data = amostra_sem_NA) +
-  labs(x ='Tipo de Parto', y ='Frequencia relativa') +
-  geom_bar(mapping = aes(x = ESCMAE, fill = PARTO), position = 'fill')
-
-
-
-
-#write.csv(amostra_sem_NA, file = 'amostra_sem_NA.csv', fileEncoding = 'UTF-8')
-
+#
+#
+# amostra_sem_NA <- AMOSTRA[,c('DTNASCMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
+#
+#
+#
+# amostra_sem_NA <- amostra_sem_NA[(!is.na(amostra_sem_NA$PARTO)) &
+#                                    (!is.na(amostra_sem_NA$DTNASCMAE))&
+#                                    (!is.na(amostra_sem_NA$ESCMAE)) &
+#                                    (!is.na(amostra_sem_NA$RACACORMAE)),]
+#
+#
+#
+#
+# ggplot(data = amostra_sem_NA) +
+#   labs(x ='Tipo de parto', y ='Quantidade de partos')+
+#   geom_bar(mapping = aes(x = PARTO, fill=PARTO))
+#
+#
+#
+# #library(ggplot2)
+# library(tidyverse)
+# library(moments)
+#
+#
+#
+# ggplot(data = amostra_sem_NA) +
+#   labs(x ='Tipo de parto', y ='Quantidade de partos')+
+#   geom_bar(mapping = aes(x = PARTO, fill=PARTO))
+#
+#
+# ggplot(data = amostra_sem_NA) +
+#   labs(x ='Escolaridade da Mãe', y ='Quantidade de pessoas por classe') +
+#   geom_bar(mapping = aes(x = ESCMAE, fill=ESCMAE)) +
+#   coord_flip()
+#
+# ggplot(data = amostra_sem_NA) +
+#   labs(x ='Identidade Racial', y ='Quantidade de pessoas por Raça') +
+#   geom_bar(mapping = aes(x = RACACORMAE, fill=RACACORMAE))
+#
+#
+#
+# ggplot(data = amostra_sem_NA) +
+#   labs(x ='Tipo de Parto', y ='Frequencia relativa') +
+#   geom_bar(mapping = aes(x = ESCMAE, fill = PARTO), position = 'fill')
+#
+#
+#
+#
+# #write.csv(amostra_sem_NA, file = 'amostra_sem_NA.csv', fileEncoding = 'UTF-8')
+#
