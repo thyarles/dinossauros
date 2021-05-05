@@ -161,8 +161,8 @@ cat('\n\n##### Gerando dados para a resposta da Questão 04...\n')
 #    Se sim, como?
 # ----------------------------------------------------------------------------
 cat('\n\n##### Gerando dados para a resposta da Questão 05...\n')
-sinasc <- modules::use('R')
-sinasc$q05$resposta(AMOSTRA)
+  sinasc <- modules::use('R')
+  sinasc$q05$resposta(AMOSTRA)
 
 
 
