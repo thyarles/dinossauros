@@ -25,6 +25,7 @@ configuraTema <- function() {
 # Salva gráfico na pasta png
 export('gravaEmDisco')
 gravaEmDisco <- function(arquivo) {
+  cat('  --> Salvando gráfico em ./png/', arquivo, '.png\n', sep = '')
   ggsave(
     filename = paste('png/', arquivo, '.png', sep = ''),
     plot = last_plot(),

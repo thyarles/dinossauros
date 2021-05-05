@@ -44,7 +44,7 @@ print('Carregando tabelas auxiliares...')
 
 # Calcula número de observações por UF
 # ------------------------------------------------------------------------------
-print('Calculando observações por UF...')
+print('Calculando observações por UF, por favor, aguarde...')
   for (uf in UF$SIGLA_UF) {
     UF$NUM_OBS_SINASC[UF$SIGLA_UF == uf] <- sinasc$tabelaDados$total(uf)
   }
@@ -54,6 +54,13 @@ print('Calculando observações por UF...')
 # ------------------------------------------------------------------------------
 print('Calculando amostra proporcional para cada UF (2000 no total)...')
   UF$AMOSTRA = as.integer(round(prop.table(UF$NUM_OBS_SINASC)*2000))
+
+
+# Tabela para formatação e uso no relatório
+# ------------------------------------------------------------------------------
+cat('\n','--> Número de observações totais e da amostra por UF\n´', '\n')
+  print(UF[, c('SIGLA_UF', 'NUM_OBS_SINASC', 'AMOSTRA')])
+  cat('\n')
 
 
 # Configura SEED para 1234 para que o estudo seja repetido em outras máquinas
@@ -105,12 +112,11 @@ print('Configurando o tema do GGPLOT para um padrão do trabalho...')
 ################################################################################
 # Resposta aos itens
 ################################################################################
-print('Gerando dados para a resposta do item 1...')
+cat('\n\n##### Gerando dados para a resposta da Questão 01...\n')
 
   # 1. Pode-se dizer que o número de partos varia entre os dias da semana?
   #    Por que?
   # ----------------------------------------------------------------------------
-  sinasc <- modules::use('R')
   sinasc$q01$resposta(AMOSTRA)
 
 

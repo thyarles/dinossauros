@@ -13,7 +13,7 @@ export('resposta')
 # Define função de resposta
 resposta <- function(df) {
 
-  cat('--> Criando data frames para gerar tabelas e gráficos...', '\n')
+  cat('\n  --> Criando data frames para gerar tabelas e gráficos...\n')
 
   # Criação de dataframe com tipo de parto por Dia da Semana (PDS) sem NAs
   PDS <- data.frame(wday(df$DTNASC[!is.na(df$PARTO)]),
@@ -38,9 +38,6 @@ resposta <- function(df) {
                                                       'Dia útil'))
   # Impressão da tabela
   grafico$geraTabela('Parto por tipo de dia na semana', table(PDG$DIA, PDG$PARTO))
-
-
-  cat('--> Salvando gráficos...', '\n')
 
   # Geração do gráfico com o número de partos por dia da semana
   ggplot(as.data.frame(PDS), aes(x = DIA, fill = PARTO)) +
