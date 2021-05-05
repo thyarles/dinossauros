@@ -40,7 +40,7 @@ gravaEmDisco <- function(arquivo) {
   )
 }
 
-# Salva gráfico na pasta png
+# Imprime tabela com totalizadores
 export('geraTabela')
 geraTabela <- function(titulo, tabela) {
   cat ('\n  >>>', titulo, '\n')

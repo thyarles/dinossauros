@@ -44,7 +44,7 @@ print('Carregando tabelas auxiliares...')
 
 # Calcula número de observações por UF
 # ------------------------------------------------------------------------------
-print('Calculando observações por UF, por favor, aguarde...')
+print('Carregando e calculando observações por UF, por favor, aguarde...')
   for (uf in UF$SIGLA_UF) {
     UF$NUM_OBS_SINASC[UF$SIGLA_UF == uf] <- sinasc$tabelaDados$total(uf)
   }
@@ -58,7 +58,8 @@ print('Calculando amostra proporcional para cada UF (2000 no total)...')
 
 # Tabela para formatação e uso no relatório
 # ------------------------------------------------------------------------------
-cat('\n','--> Número de observações totais e da amostra por UF\n´', '\n')
+cat('\n  --> Número de observações totais e da amostra por UF\n´', '\n')
+  # Define dataframe auxiliar para ordenação
   print(UF[, c('SIGLA_UF', 'NUM_OBS_SINASC', 'AMOSTRA')])
   cat('\n')
 
