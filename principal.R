@@ -14,9 +14,15 @@
 # Instala caso necessário e carrega pacotes para a solução do problema
 # ------------------------------------------------------------------------------
 print('Carregando e/ou instalando bibliotecas necessárias...')
-  if (!require('read.dbc')) install.packages('read.dbc') # Leitura de DBC
-  if (!require('foreign')) install.packages('foreign')   # Leitura de DBF
-  if (!require('modules')) install.packages('modules')   # Leitura dos módulos
+  if (!require('read.dbc')) install.packages('read.dbc')    # Leitura de DBC
+  if (!require('foreign')) install.packages('foreign')      # Leitura de DBF
+  if (!require('modules')) install.packages('modules')      # Leitura dos módulos
+  if (!require('ggplot2')) install.packages('ggplot2')      # Plotagem de gráficos
+  if (!require('lubridate')) install.packages('lubridate')  # Conversão de datas
+  #if (!require('stargazer')) install.packages('stargazer')  # Geração de tabelas
+  #library(stargazer)
+  library(lubridate)
+  library(ggplot2)
 
 
 # Ativa os nossos módulos no diretório R
@@ -90,14 +96,6 @@ print('Formatando campos da amostra de acordo com dicionário de dados...')
   AMOSTRA <- sinasc$dicionario$aplicaEstrutura(AMOSTRA)
 
 
-# Importações para usar o GGPLOT2
-# A biblioteca libridate foi usada porque weekdate() não permite ordenação
-# ------------------------------------------------------------------------------
-print('Importando bibliotecas para gerar gráficos e manipular datas...')
-  if (!require('ggplot2')) install.packages('ggplot2')      # Plotagem de gráficos
-  if (!require('lubridate')) install.packages('lubridate')  # Conversão de datas
-
-
 # Configurações do tema do GGPLOT2
 # ------------------------------------------------------------------------------
 print('Configurando o tema do GGPLOT para um padrão do trabalho...')
@@ -108,36 +106,43 @@ print('Configurando o tema do GGPLOT para um padrão do trabalho...')
 # Resposta aos itens
 ################################################################################
 print('Gerando dados para a resposta do item 1...')
+
   # 1. Pode-se dizer que o número de partos varia entre os dias da semana?
   #    Por que?
   # ----------------------------------------------------------------------------
 
-  # Leitura da biblioteca libridate, uma vez que o weekdate não permite ordenação
-  library(lubridate)
+  # Criação de dataframe com tipo de parto por Dia da Semana (PDS) sem NAs
+  PDS <- data.frame(wday(AMOSTRA$DTNASC[!is.na(AMOSTRA$PARTO)]),
+                    AMOSTRA$PARTO[!is.na(AMOSTRA$PARTO)])
 
-  # Criação de lista com Partos por Dia da Semana (PDS)
-  PDS <- wday(AMOSTRA$DTNASC)
+  # Ajuste no nome das colunas
+  colnames(PDS) = c('DIA', 'PARTO')
 
   # Configuração dos fatores para melhor idenbtificação dos dias da semana
-  PDS <- factor(PDS, levels = 1:7, labels = c('Dom.', 'Seg.', 'Ter.',
-                                              'Quar.', 'Qui.', 'Sex.', 'Sáb.'))
+  PDS$DIA <- factor(PDS$DIA, levels = 1:7, labels = c('Dom.', 'Seg.', 'Ter.',
+                                              'Qua.', 'Qui.', 'Sex.', 'Sáb.'))
 
-  # GEração do gráfico com o número de partos por dia da semana
-  ggplot(as.data.frame(PDS), aes(x = PDS, fill = PDS)) +
+  # Geração do gráfico com o número de partos por dia da semana
+  ggplot(as.data.frame(PDS), aes(x = DIA, fill = PARTO)) +
     # Gráfico tipo barras
-    geom_bar() +
+    geom_bar(position="dodge") +
     # Nomes dos eixos, título e subtítulo
-    labs(x = 'Dias da semana', y = 'Quantidade de partos',
-         title = 'Número de partos por dia da semana',
+    labs(x = 'Dias da semana', y = 'Num. de partos',
+         title = 'Número de partos por tipo/dia da semana',
          subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016',
          tag = 'Fig. 1') +
-    # Retira legenda, o objetivo das cores é apenas deixar o gráfico mais atrativo
-    theme(legend.position = 'none')
+    # Retira título da legenda e posiciona no topo
+    theme(legend.title = element_blank(), legend.position = "top")
 
-  # Grafa figura em disco para uso no Word
+  # Grava figura em disco para uso no Word (veja no diretório png)
   sinasc$grafico$gravaEmDisco()
 
+  # A tabela ainda não achei um jeito de fazer automático, os dados são esses:
+  table(PDS$DIA, droplevels(PDS$PARTO))
+
+  # Remove PDS
+  remove(PDS)
 
 
 ggplot(as.data.frame(PDS), aes(fill = PDS)) +
