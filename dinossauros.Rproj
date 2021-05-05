@@ -16,3 +16,5 @@ AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
 QuitChildProcessesOnExit: Yes
+
+SpellingDictionary: pt_BR
