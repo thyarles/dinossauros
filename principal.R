@@ -11,6 +11,7 @@
 # > xxxxxxxxx Diogo Pereira Almeida
 # > xxxxxxxxx Rafael Ribeiro Araújo
 
+# ------------------------------------------------------------------------------
 # Instala caso necessário e carrega pacotes para a solução do problema
 # ------------------------------------------------------------------------------
 print('Carregando e/ou instalando bibliotecas necessárias...')
