@@ -9,7 +9,9 @@ import('foreign')
 # Leitura das UFs
 export('uf')
 uf <- function() {
-   return(read.dbf('tabelas/TABUF.DBF'))
+  df <- read.dbf('tabelas/TABUF.DBF')
+  df <- df[order(df$SIGLA_UF), ]
+  return(df)
 }
 
 # Leitura dos países
