@@ -116,10 +116,19 @@ print('Gerando dados para a resposta do item 1...')
 
 
 
-ggplot(as.data.frame(PDS), aes(fill = PDS)) +
-  geom_col(position = 'dodge') +
-  labs(x = 'Idade dos alunos', y = 'Quantidade de alunos', fill = 'Consome inalantes?') +
-  geom_text(aes(label = Freq), colour = 'white', size = 3, vjust = 1.5, position = position_dodge(.9))
+
+#-----------------------------------------------------------
+
+
+amostra_sem_NA <- AMOSTRA[,c('DTNASCMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
+
+
+
+amostra_sem_NA <- amostra_sem_NA[(!is.na(amostra_sem_NA$PARTO)) &
+                                   (!is.na(amostra_sem_NA$DTNASCMAE))&
+                                   (!is.na(amostra_sem_NA$ESCMAE)) &
+                                   (!is.na(amostra_sem_NA$RACACORMAE)),]
+
 
 
 
@@ -129,32 +138,7 @@ ggplot(data = amostra_sem_NA) +
 
 
 
-ggplot(AMOSTRA$PARTO)
-
-
-#-----------------------------------------------------------
-
-amostra_sem_NA <- AMOSTRA[,c('DTNASCMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
-  amostra_sem_NA <- amostra_sem_NA[(!is.na(amostra_sem_NA$PARTO)) &
-                                     (!is.na(amostra_sem_NA$DTNASCMAE))&
-                                     (!is.na(amostra_sem_NA$ESCMAE)) &
-                                     (!is.na(amostra_sem_NA$RACACORMAE)),]
-
-
-  amostra_sem_NA$ESCMAE <- factor(amostra_sem_NA$ESCMAE,
-       label = c('Nenhuma','1 a 3 anos','4 a 7 anos',
-                 '8 a 11 anos','12 e mais', 'Ignorado'),
-       level= c(1,2,3,4,5,9))
-  amostra_sem_NA$RACACORMAE <- factor(amostra_sem_NA$RACACORMAE,
-        label = c('Branca','Preta','Amarela','Parda','Indígena'),
-        level= 1:5)
-
-  amostra_sem_NA$PARTO <- factor(amostra_sem_NA$PARTO,
-                          label = c('Vaginal','Cesáreo','Ignorado'),
-                          level= c(1,2,9))
-
-
-library(ggplot2)
+#library(ggplot2)
 library(tidyverse)
 library(moments)
 
