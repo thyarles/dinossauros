@@ -44,7 +44,7 @@ print('Carregando tabelas auxiliares...')
 
 # Calcula número de observações por UF
 # ------------------------------------------------------------------------------
-print('Calculando observações por UF...')
+print('Carregando e calculando observações por UF, por favor, aguarde...')
   for (uf in UF$SIGLA_UF) {
     UF$NUM_OBS_SINASC[UF$SIGLA_UF == uf] <- sinasc$tabelaDados$total(uf)
   }
@@ -54,6 +54,14 @@ print('Calculando observações por UF...')
 # ------------------------------------------------------------------------------
 print('Calculando amostra proporcional para cada UF (2000 no total)...')
   UF$AMOSTRA = as.integer(round(prop.table(UF$NUM_OBS_SINASC)*2000))
+
+
+# Tabela para formatação e uso no relatório
+# ------------------------------------------------------------------------------
+cat('\n  --> Número de observações totais e da amostra por UF\n´', '\n')
+  # Define dataframe auxiliar para ordenação
+  print(UF[, c('SIGLA_UF', 'NUM_OBS_SINASC', 'AMOSTRA')])
+  cat('\n')
 
 
 # Configura SEED para 1234 para que o estudo seja repetido em outras máquinas
@@ -105,44 +113,14 @@ print('Configurando o tema do GGPLOT para um padrão do trabalho...')
 ################################################################################
 # Resposta aos itens
 ################################################################################
-print('Gerando dados para a resposta do item 1...')
+cat('\n\n##### Gerando dados para a resposta da Questão 01...\n')
 
   # 1. Pode-se dizer que o número de partos varia entre os dias da semana?
   #    Por que?
   # ----------------------------------------------------------------------------
+  sinasc$q01$resposta(AMOSTRA)
 
-  # Criação de dataframe com tipo de parto por Dia da Semana (PDS) sem NAs
-  PDS <- data.frame(wday(AMOSTRA$DTNASC[!is.na(AMOSTRA$PARTO)]),
-                    AMOSTRA$PARTO[!is.na(AMOSTRA$PARTO)])
 
-  # Ajuste no nome das colunas
-  colnames(PDS) = c('DIA', 'PARTO')
-
-  # Configuração dos fatores para melhor idenbtificação dos dias da semana
-  PDS$DIA <- factor(PDS$DIA, levels = 1:7, labels = c('Dom.', 'Seg.', 'Ter.',
-                                              'Qua.', 'Qui.', 'Sex.', 'Sáb.'))
-
-  # Geração do gráfico com o número de partos por dia da semana
-  ggplot(as.data.frame(PDS), aes(x = DIA, fill = PARTO)) +
-    # Gráfico tipo barras
-    geom_bar(position="dodge") +
-    # Nomes dos eixos, título e subtítulo
-    labs(x = 'Dias da semana', y = 'Num. de partos',
-         title = 'Número de partos por tipo/dia da semana',
-         subtitle = 'Registrados no Brasil em 2016',
-         caption = 'Fonte: SINASC 2016',
-         tag = 'Fig. 1') +
-    # Retira título da legenda e posiciona no topo
-    theme(legend.title = element_blank(), legend.position = "top")
-
-  # Grava figura em disco para uso no Word (veja no diretório png)
-  sinasc$grafico$gravaEmDisco()
-
-  # A tabela ainda não achei um jeito de fazer automático, os dados são esses:
-  table(PDS$DIA, droplevels(PDS$PARTO))
-
-  # Remove PDS
-  remove(PDS)
 
 
 

@@ -1,17 +1,8 @@
 # Módulo responsável pela geração dos gráficos
 
-# Leitura da library
+# Importes para a solução da questão
 import('ggplot2')
-
-# Gráfico
-export('boxplot')
-boxplot <- function(x, y) {
-  ggplot(as.data.frame(tabAlcool), aes(x = Idade, y = Freq, fill = Alcool_vida)) +
-    geom_col(position = "dodge") +
-    labs(x = "Idade dos alunos", y = "Quantidade de alunos", fill = "Consome álcool?") +
-    geom_text(aes(label = Freq), colour = "white", size = 3, vjust = 1.5, position = position_dodge(.9))
-}
-
+import('stats')
 
 # Configura tema para todos os gráficos
 export('configuraTema')
@@ -33,9 +24,10 @@ configuraTema <- function() {
 
 # Salva gráfico na pasta png
 export('gravaEmDisco')
-gravaEmDisco <- function() {
+gravaEmDisco <- function(arquivo) {
+  cat('  --> Salvando gráfico em ./png/', arquivo, '.png\n', sep = '')
   ggsave(
-    'png/figura-%03d.png',
+    filename = paste('png/', arquivo, '.png', sep = ''),
     plot = last_plot(),
     device = NULL,
     path = NULL,
@@ -46,4 +38,12 @@ gravaEmDisco <- function() {
     dpi = 300,
     limitsize = TRUE,
   )
+}
+
+# Imprime tabela com totalizadores
+export('geraTabela')
+geraTabela <- function(titulo, tabela) {
+  cat ('\n  >>>', titulo, '\n')
+  print(addmargins(tabela))
+  cat ('\n')
 }
