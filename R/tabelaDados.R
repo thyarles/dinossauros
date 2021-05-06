@@ -15,7 +15,7 @@ export('total')
 total <- function(uf) {
 
   # Inicia feedback ao usuario
-  # cat('-->', uf, 'tem ')
+  cat('-->', uf, 'tem ')
 
   # Leitura do DBC para a UF, caso já não esteja carregado.
   if (!exists(uf, envir = .GlobalEnv)) {
@@ -26,7 +26,7 @@ total <- function(uf) {
   observacoes <- dim(get(uf,  envir = .GlobalEnv))[1]
 
   # Finaliza feedback ao usuario
-  # cat(observacoes,  'observações.', '\n')
+  cat(observacoes,  'observações.', '\n')
 
   # Retorna resultado
   return(observacoes)
