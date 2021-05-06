@@ -22,7 +22,6 @@ resposta <- function(df) {
                           (!is.na(parto$ESCMAE)) &
                           (!is.na(parto$RACACORMAE)),]
 
-
   # Geração do gráfico com o número de partos por dias úteis/fds
   ggplot(parto) +
     # Gráfico tipo barras
