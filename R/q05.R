@@ -112,7 +112,8 @@ resposta <- function(df) {
 
     # Gerando tabela de contingência partos por idade
   tab_partos_idade <- table(parto$IDADE_AGRUP,parto$PARTO )
-  addmargins(tab_partos_idade)
+  #addmargins(tab_partos_idade)
+  tab_partos_idade
 
   # Proporção das idades das mães (Variável resposta) por parto (v. explicativa)
   prop.table(tab_partos_idade,2)#*100
@@ -123,17 +124,19 @@ resposta <- function(df) {
 
   # Tabela de contigência partos por escolaridade
   tab_partos_escolaridade <- table(parto$ESCMAE,parto$PARTO )
-  addmargins(tab_partos_escolaridade)
+  #addmargins(tab_partos_escolaridade)
+  (tab_partos_escolaridade)
   prop.table(tab_partos_escolaridade,1)#*100
 
 
   # Tabela de contigência partos por cor
   tab_partos_cor <- table(parto$RACACORMAE,parto$PARTO )
-  addmargins(tab_partos_cor)
+  #addmargins(tab_partos_cor)
+  (tab_partos_cor)
   prop.table(tab_partos_cor,1)#*100
 
 
   }
 
-##parto[parto$ESCMAE == 'Ignorado',]
+#parto[parto$PARTO == 'Ignorado',]
 #df[c('PARTO', 'IDADEMAE')][df$PARTO == 'Ignorado',]
