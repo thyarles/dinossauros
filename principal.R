@@ -20,15 +20,21 @@ print('Carregando e/ou instalando bibliotecas necessárias...')
   if (!require('modules')) install.packages('modules')      # Leitura dos módulos
   if (!require('ggplot2')) install.packages('ggplot2')      # Plotagem de gráficos
   if (!require('lubridate')) install.packages('lubridate')  # Conversão de datas
-  library(lubridate)
-  library(ggplot2)
+
+  # Carrega pacotes globais para plotagem de gráficos com supressão de mensagens
+  suppressMessages(
+    suppressWarnings(
+      suppressPackageStartupMessages(
+        library('ggplot2')
+      )
+    )
+  )
 
 # ------------------------------------------------------------------------------
 # Ativa os nossos módulos no diretório R
 # ------------------------------------------------------------------------------
 print('Carregando módulos na pasta R...')
   sinasc <- modules::use('R')
-
 
 # ------------------------------------------------------------------------------
 # Leitura das tabelas auxiliares
@@ -41,7 +47,6 @@ print('Carregando tabelas auxiliares...')
   CID       <- sinasc$tabelaAuxiliar$cid()
   MUNICIPIO <- sinasc$tabelaAuxiliar$municipio()
 
-
 # ------------------------------------------------------------------------------
 # Calcula número de observações por UF
 # ------------------------------------------------------------------------------
@@ -50,13 +55,16 @@ print('Carregando e calculando observações por UF, por favor, aguarde...')
     UF$NUM_OBS_SINASC[UF$SIGLA_UF == uf] <- sinasc$tabelaDados$total(uf)
   }
 
-
 # ------------------------------------------------------------------------------
 # Calcula número de amostras para cada UF
 # ------------------------------------------------------------------------------
 print('Calculando amostra proporcional para cada UF (2000 no total)...')
-  UF$AMOSTRA = as.integer(round(prop.table(UF$NUM_OBS_SINASC)*2000))
-
+  if (!exists('AMOSTRA')) {
+    # Calcula somente se já não existe o dataframe AMOSTRA
+    UF$AMOSTRA = as.integer(round(prop.table(UF$NUM_OBS_SINASC)*2000))
+  } else {
+    cat('--> Proporções já calculadas, pulando...\n')
+  }
 
 # ------------------------------------------------------------------------------
 # Tabela para formatação e uso no relatório
@@ -66,13 +74,11 @@ cat('\n  --> Número de observações totais e da amostra por UF\n´', '\n')
   print(UF[, c('SIGLA_UF', 'NUM_OBS_SINASC', 'AMOSTRA')])
   cat('\n')
 
-
 # ------------------------------------------------------------------------------
 # Configura SEED para 1234 para que o estudo seja repetido em outras máquinas
 # ------------------------------------------------------------------------------
 print('Configrando o SEED para 1234...')
   set.seed(1234)
-
 
 # ------------------------------------------------------------------------------
 # Amostra os dados considerando os nascidos em hospitais no dataframe AMOSTRA
@@ -85,6 +91,11 @@ print('Salvando amostras de cada UF no dataframe AMOSTRAS...')
     df <- sinasc$tabelaDados$amostra(uf, numAmostras)
     # Verifica se o dataframe AMOSTRA ja existe... se não, trata diferente
     if (exists('AMOSTRA')) {
+      # Verifica se o AMOSTRA está completo e saipara otimizar processamento
+      if (dim(AMOSTRA)[1] == 2000) {
+        cat('--> AMOSTRAs já criadas, pulando...\n')
+        break
+      }
       # Nas demais, adiciona-se linhas ao existente
       AMOSTRA <- rbind(AMOSTRA, df)
     } else {
@@ -92,7 +103,6 @@ print('Salvando amostras de cada UF no dataframe AMOSTRAS...')
       AMOSTRA <- df
     }
   }
-
 
 # ------------------------------------------------------------------------------
 # Limpa dataframes e variáveis não necessárias nos próximos passos
@@ -103,19 +113,16 @@ print('Limpando e otimizando memória...')
   # Limpa dataframes dos Estados
   remove(list = as.character(UF$SIGLA_UF))
 
-
 # Formata campos de acordo com a Estrutura do SINASC que acompanhou o BD
 # ------------------------------------------------------------------------------
 print('Formatando campos da amostra de acordo com dicionário de dados...')
   AMOSTRA <- sinasc$dicionario$aplicaEstrutura(AMOSTRA)
-
 
 # ------------------------------------------------------------------------------
 # Configurações do tema do GGPLOT2
 # ------------------------------------------------------------------------------
 print('Configurando o tema do GGPLOT para um padrão do trabalho...')
   sinasc$grafico$configuraTema()
-
 
 ################################################################################
 # Resposta aos itens
@@ -126,23 +133,19 @@ print('Configurando o tema do GGPLOT para um padrão do trabalho...')
 #    Por que?
 # ----------------------------------------------------------------------------
 cat('\n\n##### Gerando dados para a resposta da Questão 01...\n')
-  sinasc <- modules::use('R')
   sinasc$q01$resposta(AMOSTRA)
-
 
 # ------------------------------------------------------------------------------
 # 2. Qual é o percentual de mães solteiras?
 #    Descrever a variável estado civil das mães.
 # ----------------------------------------------------------------------------
 cat('\n\n##### Gerando dados para a resposta da Questão 02...\n')
-  sinasc <- modules::use('R')
   sinasc$q02$resposta(AMOSTRA)
 
 # ------------------------------------------------------------------------------
 # 3. Descrever a variável peso do recém-nascidos da amostra.
 # ----------------------------------------------------------------------------
 cat('\n\n##### Gerando dados para a resposta da Questão 03...\n')
-  sinasc <- modules::use('R')
   sinasc$q03$resposta(AMOSTRA)
 
 # ------------------------------------------------------------------------------
@@ -150,7 +153,6 @@ cat('\n\n##### Gerando dados para a resposta da Questão 03...\n')
 #    A relação é forte?
 # ----------------------------------------------------------------------------
 cat('\n\n##### Gerando dados para a resposta da Questão 04...\n')
-  sinasc <- modules::use('R')
   sinasc$q04$resposta(AMOSTRA)
 
 # ------------------------------------------------------------------------------
@@ -161,63 +163,4 @@ cat('\n\n##### Gerando dados para a resposta da Questão 04...\n')
 #    Se sim, como?
 # ----------------------------------------------------------------------------
 cat('\n\n##### Gerando dados para a resposta da Questão 05...\n')
-  sinasc <- modules::use('R')
   sinasc$q05$resposta(AMOSTRA)
-
-
-
-# ------------------------------------------------------------------------------
-# Código do Bruno para aproveitamento nos gráficos
-# Descomentar para testar
-#-----------------------------------------------------------
-#
-#
-# amostra_sem_NA <- AMOSTRA[,c('DTNASCMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
-#
-#
-#
-# amostra_sem_NA <- amostra_sem_NA[(!is.na(amostra_sem_NA$PARTO)) &
-#                                    (!is.na(amostra_sem_NA$DTNASCMAE))&
-#                                    (!is.na(amostra_sem_NA$ESCMAE)) &
-#                                    (!is.na(amostra_sem_NA$RACACORMAE)),]
-#
-#
-#
-#
-# ggplot(data = amostra_sem_NA) +
-#   labs(x ='Tipo de parto', y ='Quantidade de partos')+
-#   geom_bar(mapping = aes(x = PARTO, fill=PARTO))
-#
-#
-#
-# #library(ggplot2)
-# library(tidyverse)
-# library(moments)
-#
-#
-#
-# ggplot(data = amostra_sem_NA) +
-#   labs(x ='Tipo de parto', y ='Quantidade de partos')+
-#   geom_bar(mapping = aes(x = PARTO, fill=PARTO))
-#
-#
-# ggplot(data = amostra_sem_NA) +
-#   labs(x ='Escolaridade da Mãe', y ='Quantidade de pessoas por classe') +
-#   geom_bar(mapping = aes(x = ESCMAE, fill=ESCMAE)) +
-#   coord_flip()
-#
-# ggplot(data = amostra_sem_NA) +
-#   labs(x ='Identidade Racial', y ='Quantidade de pessoas por Raça') +
-#   geom_bar(mapping = aes(x = RACACORMAE, fill=RACACORMAE))
-#
-#
-#
-# ggplot(data = amostra_sem_NA) +
-#   labs(x ='Tipo de Parto', y ='Frequencia relativa') +
-#   geom_bar(mapping = aes(x = ESCMAE, fill = PARTO), position = 'fill')
-#
-#
-#
-#
-# #write.csv(amostra_sem_NA, file = 'amostra_sem_NA.csv', fileEncoding = 'UTF-8')
-#

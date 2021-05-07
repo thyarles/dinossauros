@@ -3,7 +3,13 @@
 
 # Importes para a solução da questão
 grafico <- modules::use('R/grafico.R')
-import('ggplot2')
+suppressMessages(
+  suppressWarnings(
+    suppressPackageStartupMessages(
+      import('ggplot2')
+    )
+  )
+)
 
 # Exporta função
 export('resposta')

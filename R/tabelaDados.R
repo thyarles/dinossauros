@@ -8,25 +8,44 @@
 # DNCE2016.dbc  DNMS2016.dbc  DNPR2016.dbc  DNSC2016.dbc
 
 # Leitura da library
-import('read.dbc')
+suppressMessages(
+  suppressWarnings(
+    suppressPackageStartupMessages(
+      import('read.dbc')
+    )
+  )
+)
+
 
 # Contabiliza o total de observações por UF
 export('total')
 total <- function(uf) {
 
-  # Inicia feedback ao usuario
-  cat('-->', uf, 'tem ')
+  # Verifica se já existe o data frame AMOSTRA para economizar processamento
+  if (exists('AMOSTRA', envir = .GlobalEnv)) {
 
-  # Leitura do DBC para a UF, caso já não esteja carregado.
-  if (!exists(uf, envir = .GlobalEnv)) {
-    assign(uf, read.dbc(paste0('dados/DN', uf, '2016.dbc')), envir = .GlobalEnv)
+    # Captura valor atual já calculado
+    df <- get('UF', envir = .GlobalEnv)
+    observacoes <- df$NUM_OBS_SINASC[df$SIGLA_UF==uf]
+    cat('-->', uf, 'tem ', observacoes,  'observações (cache).', '\n')
+
+  } else {
+
+    # Inicia feedback ao usuario
+    cat('-->', uf, 'tem ')
+
+    # Leitura do DBC para a UF, caso já não esteja carregado.
+    if (!exists(uf, envir = .GlobalEnv)) {
+      assign(uf, read.dbc(paste0('dados/DN', uf, '2016.dbc')), envir = .GlobalEnv)
+    }
+
+    # Leitura das observações
+    observacoes <- dim(get(uf,  envir = .GlobalEnv))[1]
+
+    # Finaliza feedback ao usuario
+    cat(observacoes,  'observações.', '\n')
+
   }
-
-  # Leitura das observações
-  observacoes <- dim(get(uf,  envir = .GlobalEnv))[1]
-
-  # Finaliza feedback ao usuario
-  cat(observacoes,  'observações.', '\n')
 
   # Retorna resultado
   return(observacoes)
