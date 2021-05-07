@@ -36,9 +36,10 @@ idadeestcivilmae=AMOSTRA[, c(7, 6)]
 quantile(idadeestcivilmae$IDADEMAE, probs = seq(0, 1, 0.2))
 
 # Dividindo em 5 classes (5 é o mínimo, de acordo com a apresentação da professora)
-idadeestcivilmae$FAIXA <- cut(idadeestcivilmae$IDADEMAE, breaks=c(13,20, 25, 30, 35,
-                                            40, 47),
-                      labels=c("13|-20", "21|-25","26|-30","31|-35", "36|-40", "41|-46"),
+idadeestcivilmae$FAIXA <- cut(idadeestcivilmae$IDADEMAE,
+                              breaks=c(13,20, 25, 30, 35, 40, 47),
+                      labels=c("13|-20", "21|-25","26|-30","31|-35",
+                               "36|-40", "41|-46"),
                       right=FALSE)
 
 estcivilmaefaixa=idadeestcivilmae[,c(1,3)]
@@ -47,10 +48,30 @@ estcivilmaefaixa
 table(estcivilmaefaixa)
 
 # Gerando gráfico 1
-barplot(prop.table(tabestcivmae), col = c(1, 2, 3, 4, 5, 6), xlab = "Estado Civil",
+barplot(prop.table(tabestcivmae), col = c(1, 2, 3, 4, 5, 6),
+        xlab = "Estado Civil",
         ylab = "Percentual", ylim = c(0, 0.5))
 
 pie(prop.table(tabestcivmae), col = c(1, 2, 3, 4, 5, 6), clockwise = TRUE)
+
+
+
+ggplot(estcivilmaefaixa) +
+  # Gráfico tipo barras
+  geom_bar(aes(x = FAIXA, fill = ESTCIVMAE), position = 'fill') +
+  # Escala de cor leve
+  scale_fill_brewer() +
+  # Nomes dos eixos, título e subtítulo
+  labs(x = 'Escolaridade da Mãe', y = 'N° partos',
+       title = 'Número de partos pela escolaridade da mãe',
+       subtitle = 'Registrados no Brasil em 2016',
+       caption = 'Fonte: SINASC 2016') +
+  # Retira título da legenda e posiciona no topo
+  theme(legend.title = element_blank(), legend.position = "top")
+# Grava figura em disco para uso no Word (veja no diretório png)
+grafico$gravaEmDisco('q01-partosPorEscolaridade')
+
+
 
 ## NÃO ESTOU CONSEGUINDO GERAR NO GGPLOT !!!
 
