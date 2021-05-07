@@ -2,6 +2,12 @@
 #    Descrever a variável estado civil das mães.
 # ----------------------------------------------------------------------------
 
+
+#DÚVIDAS:
+#- GERAR GRÁFICO 1 NO GGPLOT
+#- GERAR GRÁFICO 2 (NÃO CONSIGO NENHUM DELES)
+
+
 # Importes para a solução da questão
 grafico <- modules::use('R/grafico.R')
 import('ggplot2')
@@ -12,7 +18,7 @@ export('resposta')
 # Define função de resposta
 resposta <- function(df) {
 
-  cat('\n  --> Criando data frames para gerar tabelas e gráficos...\n')
+cat('\n  --> Criando data frames para gerar tabelas e gráficos...\n')
 
 
 # Gerando tabela com os dados de estado civil da mãe
@@ -52,7 +58,6 @@ pie(prop.table(tabestcivmae), col = c(1, 2, 3, 4, 5, 6), clockwise = TRUE)
 
 plot(estcivilmaefaixa)
 
-## NÃO ESTOU CONSEGUINDO GERAR NENHUM GRÁFICO !!!
 
 # RELATÓRIO
 # Estado civil das mães
@@ -63,7 +68,7 @@ plot(estcivilmaefaixa)
 # cerca de 1/4 do total (24,41%). Por fim, as divorciadas são 0,86% das mães e as
 # viúvas somam 0,15%.
 #
-# INSERIR GRÁFICO GERAL
+# INSERIR GRÁFICO GERAL (1)
 #
 # Os números também mostram que a proporção de solteiras varia de acordo com a
 # idade: elas são a maioria nas classes etárias mais baixas (dos 13 aos 24 anos),
@@ -72,7 +77,7 @@ plot(estcivilmaefaixa)
 # milhão de lares liderados por mulheres solteiras entre 2005 e 2015 (IBGE apud
 # Velasco, 2017).
 #
-# INSERIR GRÀFICO DE LINHAS
+# INSERIR GRÀFICO DE LINHAS (2)
 #
 # REF https://g1.globo.com/economia/noticia/em-10-anos-brasil-ganha-mais-de-1-milhao-de-familias-formadas-por-maes-solteiras.ghtml
 
