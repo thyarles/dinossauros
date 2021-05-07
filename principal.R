@@ -8,8 +8,8 @@
 # Discentes
 # > 202043666 Bruno Marques Ribeiro
 # > 202046003 Charles Henrique Gonçalves Santos
-# > xxxxxxxxx Diogo Pereira Almeida
-# > xxxxxxxxx Rafael Ribeiro Araújo
+# > 202046621 Diogo Pereira Almeida
+# > 202046541 Rafael Ribeiro Araújo
 
 # ------------------------------------------------------------------------------
 # Instala caso necessário e carrega pacotes para a solução do problema
