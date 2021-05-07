@@ -77,7 +77,7 @@ resposta <- function(df) {
   # Geração do gráfico com o número de partos pela idade das mães
   tab_partos_idadeMAE <- table(parto$IDADEMAE,parto$PARTO )
   #addmargins(tab_partos_idade)
-  print(tab_partos_idadeMAE)
+  #print(tab_partos_idadeMAE)
   provisorio <- data.frame(prop.table(tab_partos_idadeMAE,1))
   DF_parto_idade <- provisorio[provisorio$Var2 == 'Vaginal',]
   #Mudamos os nomes das variáveis
@@ -148,7 +148,7 @@ resposta <- function(df) {
     # Gerando tabela de contingência partos por idade
   tab_partos_idade <- table(parto$IDADE_AGRUP,parto$PARTO )
   #addmargins(tab_partos_idade)
-  print(droplevels(tab_partos_idade))
+  print((tab_partos_idade))
 
   # Proporção das idades das mães (Variável resposta) por parto (v. explicativa)
   print(prop.table(tab_partos_idade,2))#*100
