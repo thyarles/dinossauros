@@ -69,7 +69,7 @@ print('Calculando amostra proporcional para cada UF (2000 no total)...')
 # ------------------------------------------------------------------------------
 # Tabela para formatação e uso no relatório
 # ------------------------------------------------------------------------------
-cat('\n  --> Número de observações totais e da amostra por UF\n´', '\n')
+cat('\n  >>> Número de observações totais e da amostra por UF\n´', '\n')
   # Define dataframe auxiliar para ordenação
   print(UF[, c('SIGLA_UF', 'NUM_OBS_SINASC', 'AMOSTRA')])
   cat('\n')
