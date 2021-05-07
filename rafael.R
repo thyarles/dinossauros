@@ -7,7 +7,7 @@
 #- GERAR GRÁFICO 1 NO GGPLOT
 #- GERAR GRÁFICO 2 (NÃO CONSIGO NENHUM DELES)
 
-
+df=AMOSTRA
 # Importes para a solução da questão
 grafico <- modules::use('R/grafico.R')
 import('ggplot2')
