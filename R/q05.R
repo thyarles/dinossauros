@@ -17,15 +17,12 @@ resposta <- function(df) {
 
   #1. Cria o dataframe parto como sub-dataframe de df e exclui os que não
   # interessam
-  parto <- df[,c('IDADEMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
+  parto <- df[c('IDADEMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
 
   parto <- parto[(!is.na(parto$PARTO)) &
                           (!is.na(parto$IDADEMAE))&
                           (!is.na(parto$ESCMAE)) &
                           (!is.na(parto$RACACORMAE)),]
-
-  parto[parto$ESCMAE == 'Ignorado',]
-  df[c('PARTO', 'IDADEMAE')][df$PARTO == 'Ignorado',]
 
 
   # --- 2. Agrupando a variável idade
@@ -138,4 +135,5 @@ resposta <- function(df) {
 
   }
 
-
+##parto[parto$ESCMAE == 'Ignorado',]
+#df[c('PARTO', 'IDADEMAE')][df$PARTO == 'Ignorado',]
