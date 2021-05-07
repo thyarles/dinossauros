@@ -36,9 +36,9 @@ idadeestcivilmae=AMOSTRA[, c(7, 6)]
 quantile(idadeestcivilmae$IDADEMAE, probs = seq(0, 1, 0.2))
 
 # Dividindo em 5 classes (5 é o mínimo, de acordo com a apresentação da professora)
-idadeestcivilmae$FAIXA <- cut(idadeestcivilmae$IDADEMAE, breaks=c(13,20, 24, 28, 33,
-                                            47),
-                      labels=c("13|-20", "21|-24","25|-28","29|-33", "34|-46"),
+idadeestcivilmae$FAIXA <- cut(idadeestcivilmae$IDADEMAE, breaks=c(13,20, 25, 30, 35,
+                                            40, 47),
+                      labels=c("13|-20", "21|-25","26|-30","31|-35", "36|-40", "41|-46"),
                       right=FALSE)
 
 estcivilmaefaixa=idadeestcivilmae[,c(1,3)]
