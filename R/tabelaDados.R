@@ -46,6 +46,8 @@ total <- function(uf) {
 export('amostra')
 amostra <- function(uf, amostra) {
 
+  # uf = 'SP'
+  # amostra = 100 (número de amostras)
   # Leitura do DBC para a UF, caso já não esteja carregado.
   if (!exists(uf, envir = .GlobalEnv)) {
     assign(uf, read.dbc(paste0('dados/DN', uf, '2016.dbc')), envir = .GlobalEnv)

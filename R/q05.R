@@ -19,11 +19,13 @@ resposta <- function(df) {
   # interessam
   parto <- df[c('IDADEMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
 
-  parto <- parto[(!is.na(parto$PARTO)) &
-                          (!is.na(parto$IDADEMAE))&
-                          (!is.na(parto$ESCMAE)) &
-                          (!is.na(parto$RACACORMAE)),]
+  parto <-  parto[(!is.na(parto$PARTO)) & (parto$PARTO != 'Ignorado') &
+                  (!is.na(parto$IDADEMAE))& (parto$IDADEMAE != 'Ignorado') &
+                  (!is.na(parto$ESCMAE)) & (parto$ESCMAE != 'Ignorado') &
+                  (!is.na(parto$RACACORMAE))& (parto$RACACORMAE != 'Ignorado'),]
 
+
+  parto <- droplevels(parto)
 
   # --- 2. Agrupando a variável idade
 
@@ -148,7 +150,9 @@ resposta <- function(df) {
     # Gerando tabela de contingência partos por idade
   tab_partos_idade <- table(parto$IDADE_AGRUP,parto$PARTO )
   #addmargins(tab_partos_idade)
+  cat('\n  --> Criando tabela de partos por idade...\n')
   print((tab_partos_idade))
+
 
   # Proporção das idades das mães (Variável resposta) por parto (v. explicativa)
   print(prop.table(tab_partos_idade,2))#*100
