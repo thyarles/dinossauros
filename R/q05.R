@@ -145,7 +145,7 @@ resposta <- function(df) {
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q01-partosCorMae')
+  grafico$gravaEmDisco('q05-partosCorMae')
 
 
 
