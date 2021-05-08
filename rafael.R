@@ -140,6 +140,27 @@ ggplot(df, aes(x = FAIXA, fill=ECA)) +
 # Grava figura em disco para uso no Word (veja no diretório png)
 grafico$gravaEmDisco('q02-estCivilFaixaEtaria')
 
+# Sugstão
+ggplot(df, aes(x = FAIXA, group=ECA)) +
+  # Aplica percentual calculado via GGPLOT
+  geom_bar(aes(y = ..prop.., fill = ECA), stat="count", show.legend = FALSE) +
+  facet_grid(ECA~ .) +
+  # Aplica o tema de cores
+  scale_fill_brewer() +
+  # Adiciona percentual para ficar "humanizado"
+  scale_y_continuous(labels = scales::percent) +
+  # Nomes dos eixos, título e subtítulo
+  labs(x = 'Faixa etária', y = NULL,
+       title = 'Percentual do estado civil das mães por faixa etária',
+       subtitle = 'Registrados no Brasil em 2016',
+       caption = 'Fonte: SINASC 2016') +
+  theme(legend.title = element_blank(), legend.position = "top",
+        strip.background = element_blank(),
+        strip.text.x = element_blank())
+
+# Grava figura em disco para uso no Word (veja no diretório png)
+grafico$gravaEmDisco('q02-estCivilFaixaEtariaSugestao')
+
 
 # RELATÓRIO
 # Estado civil das mães
