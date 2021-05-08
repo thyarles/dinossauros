@@ -38,9 +38,9 @@ quantile(idadeestcivilmae$IDADEMAE, probs = seq(0, 1, 0.2))
 # Dividindo em 5 classes (5 é o mínimo, de acordo com a apresentação da professora)
 idadeestcivilmae$FAIXA <- cut(idadeestcivilmae$IDADEMAE,
                               breaks=c(13,20, 25, 30, 35, 40, 47),
-                      labels=c("13 |- 20", "21 |- 25","26 |- 30","31 |- 35",
-                               "36 |- 40", "41 |- 46"),
-                      right=FALSE)
+                              labels=c("13 |- 20", "20 |- 25","25 |- 30","30 |- 35",
+                               "35 |- 40", "40 |- 46"),
+                              right=FALSE)
 
 estcivilmaefaixa=idadeestcivilmae[,c(1,3)]
 table(estcivilmaefaixa)
@@ -66,10 +66,11 @@ df$ECA <- factor(df$ECA, levels = c(1, 2, 5, 99), labels = c('Solteira',
                                                              'União estável',
                                                              'Outros'))
 # Criando as faixas no df
-df$FAIXA <- cut(df$IDADEMAE, breaks=c(13, 20, 25, 30, 35, 40, 47),
-                labels=c("13 |- 20", "21 |- 25","26 |- 30","31 |- 35",
-                         "36 |- 40", "41 |- 46"),
-                right=FALSE)
+df$FAIXA <- cut(df$IDADEMAE,
+                   breaks=c(13,20, 25, 30, 35, 40, 47),
+                   labels=c("13 |- 20", "20 |- 25","25 |- 30","30 |- 35",
+                            "35 |- 40", "40 |- 46"),
+                   right=FALSE)
 
 # Plota gráfico
 ggplot(df, aes(x = ECA, fill='')) +
