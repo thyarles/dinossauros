@@ -21,7 +21,9 @@ configuraTema <- function() {
                                      hjust = .5,
                                      margin = margin(0, 0, 10, 0)),
         plot.tag = element_text(size = rel(0.8),
-                                vjust = 1)
+                                vjust = 1),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 0)
   ))
 }
 
