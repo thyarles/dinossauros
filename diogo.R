@@ -47,7 +47,29 @@ cat(tFreq)
 
 classesPeso <- AMOSTRA[, c(23)]
 
+#Avaliando a quantidade de classe pelo método Sturges(k = 1 + 3,3log(n))
+
+k=nclass.Sturges(AMOSTRA$PESO)
+k
+
+#Regra da Raiz Quadrada (k=sqrt(n))
+
+k=sqrt(length(classesPeso))
+k
+
+#Regra da Potência de 2(Menor valor expoente da base 2 que tem resultado da
+#potência menor que o tamanho da amostra)
+
+#2^10=1024
+#2^11=2048
+
+k=10
+k
+
 # Gerando e nomeando os intervalos de classes
+
+#Escolhi o método da potência para estabelecer a quantidade de classes.
+#(valores ficaram arredondados e de fácil visualização e compreensão)
 
 tfreqRel <- prop.table(table(classesPeso1 <- cut(classesPeso,
                          breaks=c(0,500,1000,1500,2000,2500,3000,3500,4000,4500,5000),
@@ -63,6 +85,41 @@ tfreqRel
 
 
 #                 Transportar para EXCEL no formato padrão            #
+
+# ------------------------------------------------------------------------------
+#Histograma (Sem ggplot)
+# ------------------------------------------------------------------------------
+
+hist(AMOSTRA$PESO, xlab = "Peso",
+     ylab = "Frequência",
+     main = "Peso dos bebês nascidos em hospitais - Brasil - 2016",
+     breaks = "Sturges",
+     freq=FALSE,
+     col="light blue" )
+#     ylim = c(0, 1000),
+#     xlim = c(0, 5500) ,
+#     breaks = 8,
+
+
+
+# ------------------------------------------------------------------------------
+#Histograma (com ggplot)
+# ------------------------------------------------------------------------------
+
+#Histograma do PESO
+
+#MODELO 1
+ggplot(AMOSTRA) +
+  aes(x = PESO) +
+  geom_histogram(fill = 'lightblue',
+                 col = 'black',
+                 bins = 10,
+                 alpha = 0.3,
+                 aes(y=..density..)) +
+  labs(title = 'Peso dos bebês nascidos em hospitais - Brasil - 2016',
+       caption = 'Fonte: SISNAC XXX')
+  stat_function(fun = dnorm, args = c(mean = mean(AMOSTRA$PESO),
+                                      sd = sd(AMOSTRA$PESO)))
 
 
 # ------------------------------------------------------------------------------
@@ -183,19 +240,12 @@ amplInt
 # indica que as observações possuem uma assimetria a esquerda.
 
 # ------------------------------------------------------------------------------
-#Histograma
-# ------------------------------------------------------------------------------
-
-hist(AMOSTRA$PESO, xlab = "Peso (g)",
-     ylab = "Frequência",
-     main = "Histograma do Peso dos nascidos-vivos", ylim = c(0, 1000),
-     xlim = c(0, 6000) , breaks = 8)
-
-# ------------------------------------------------------------------------------
 #BOXPLOT
 # ------------------------------------------------------------------------------
 
-boxplot(AMOSTRA$PESO)
+boxplot(AMOSTRA$PESO,horizontal = TRUE, main="Peso dos recém-nascidos")
+
+
 
 #DEVO RETIRAR OS DADOS DAS EXTREMIDADES??????
 
@@ -300,34 +350,34 @@ ggplot(data = dados) +
 
 
 # ------------------------------------------------------------------------------
-#HISTOGRAMA DO BRUNO
+#HISTOGRAMA DO BRUNO(Com ggplot)
 # ------------------------------------------------------------------------------
 #Colocar no padrão
 
 #MODELO 1
-ggplot(AMOSTRA$PESO) +
+ggplot(AMOSTRA) +
   aes(x = PESO) +
   geom_histogram(fill = 'lightblue',
                  col = 'black',
-                 bins = 43,
-                 alpha = 0.8,
+                 bins = 10,
+                 alpha = 0.3,
                  aes(y=..density..)) +
   labs(title = 'Peso dos bebês nascidos em hospitais - Brasil - 2016',
-       caption = 'Fonte: SISNAC XXX')+
-  stat_function(fun = dnorm, args = c(mean = mean(AMOSTRA$PESO$PESO),
-                                      sd = sd(AMOSTRA$PESO$PESO)))
+       caption = 'Fonte: SISNAC XXX')
+  stat_function(fun = dnorm, args = c(mean = mean(AMOSTRA$PESO),
+                                      sd = sd(AMOSTRA$PESO)))
 
 
 #MODELO2
-ggplot(amostra_peso) +
+ggplot(AMOSTRA) +
   aes(x = PESO) +
   geom_histogram(fill = 'lightblue',
                  col = 'black',
                  bins = 45,
                  alpha = 0.8,
                  aes(y=..density..)) +
-  stat_function(fun = dnorm, args = c(mean = mean(amostra_peso$PESO),
-                                      sd = sd(amostra_peso$PESO))) +
+  stat_function(fun = dnorm, args = c(mean = mean(AMOSTRA$PESO),
+                                      sd = sd(AMOSTRA$PESO))) +
   labs(title = 'Peso dos bebês nascidos em hospitais - Brasil - 2016',
        caption = 'Fonte: SISNAC XXX')+
   geom_vline(aes(xintercept=mean(PESO,na.rm = T), color = 'mean'),
