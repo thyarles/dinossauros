@@ -1,5 +1,9 @@
 #3)Descrever a variável peso do recém-nascidos da amostra.
 
+# Importes para a solução da questão
+grafico <- modules::use('R/grafico.R')
+import('ggplot2')
+
 # ------------------------------------------------------------------------------
 #Classificação da variável
 # ------------------------------------------------------------------------------
@@ -13,8 +17,9 @@
 #Frequência ABSOLUTA
 # ------------------------------------------------------------------------------
 
-tPeso <- table(AMOSTRA$PESO)
-print(tPeso)
+# Código original
+# tPeso <- table(AMOSTRA$PESO)
+tPeso <- table(round(AMOSTRA$PESO/1000, digits = 1))
 
 
 #Como pode ser observado na tabela(REF. da tabela), existem poucas observaçoes
@@ -32,9 +37,9 @@ max(AMOSTRA$PESO)
 #amplitude de 500, cada.
 
 #cut - para criar as faixas
-tFreq <- table(cut(AMOSTRA$PESO, br=seq(0,5000, 500)))
+# tFreq <- table(cut(AMOSTRA$PESO, br=seq(0, 5000, 500)))
+tFreq <-cut_interval(round(AMOSTRA$PESO/1000, digits = 1), n = 7)
 tFreq
-cat(tFreq)
 
 # ------------------------------------------------------------------------------
 #Frequência RELATIVA
@@ -45,7 +50,7 @@ cat(tFreq)
 
 # Criando vetor com a variável PESO para dividirmos em classes.
 
-classesPeso <- AMOSTRA[, c(23)]
+classesPeso <- AMOSTRA[, 'PESO']
 
 #Avaliando a quantidade de classe pelo método Sturges(k = 1 + 3,3log(n))
 
@@ -71,12 +76,13 @@ k
 #Escolhi o método da potência para estabelecer a quantidade de classes.
 #(valores ficaram arredondados e de fácil visualização e compreensão)
 
-tfreqRel <- prop.table(table(classesPeso1 <- cut(classesPeso,
-                         breaks=c(0,500,1000,1500,2000,2500,3000,3500,4000,4500,5000),
-                         labels=c("0|-500", "500|-1000","1000|-1500","1500|-2000",
-                                  "2000|-2500", "2500|-3000", "3000|-3500",
-                                  "3500|-4000", "4000|-4500", "4500|-5000"),
-                         right=FALSE)))*100
+#tfreqRel <- prop.table(table(classesPeso1 <- cut(classesPeso,
+#                         breaks=c(0,500,1000,1500,2000,2500,3000,3500,4000,4500,5000),
+#                         labels=c("0|-500", "500|-1000","1000|-1500","1500|-2000",
+#                                  "2000|-2500", "2500|-3000", "3000|-3500",
+#                                  "3500|-4000", "4000|-4500", "4500|-5000"),
+#                         right=FALSE)))*100
+tfreqRel <- prop.table(table(tFreq))
 tfreqRel
 #COMENTÁRIOS:
 #labels - Nomes das classes
@@ -110,17 +116,19 @@ hist(AMOSTRA$PESO, xlab = "Peso",
 
 #MODELO 1
 ggplot(AMOSTRA) +
-  aes(x = PESO) +
-  geom_histogram(fill = 'lightblue',
-                 col = 'black',
-                 bins = 10,
-                 alpha = 0.3,
-                 aes(y=..density..)) +
-  labs(title = 'Peso dos bebês nascidos em hospitais - Brasil - 2016',
-       caption = 'Fonte: SISNAC XXX')
-  stat_function(fun = dnorm, args = c(mean = mean(AMOSTRA$PESO),
-                                      sd = sd(AMOSTRA$PESO)))
-
+  aes(x = round(PESO/1000, digits = 1), fill = '') +
+  scale_fill_brewer() +
+  geom_histogram(bins = 7,
+                 aes(y = ..density..),
+                 show.legend = FALSE,
+                 col = 'lightblue') +
+  labs(x = 'Massa (kg)', y = NULL,
+       title = 'Histograma do peso dos bebes nascidos em hospitais',
+       subtitle = 'Registrados no Brasil em 2016',
+       caption = 'Fonte: SINASC 2016') +
+  stat_function(fun = dnorm, args = c(mean = mean(round(AMOSTRA$PESO/1000, digits = 1)),
+                                      sd = sd(round(AMOSTRA$PESO/1000, digits = 1))))
+  grafico$gravaEmDisco('q03-histogramaPesoHopitais')
 
 # ------------------------------------------------------------------------------
 #RAMO-E-FOLHAS
