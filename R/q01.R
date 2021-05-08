@@ -2,10 +2,14 @@
 #    Por que?
 # ----------------------------------------------------------------------------
 
-# Importes para a solução da questão
-grafico <- modules::use('R/grafico.R')
-import('lubridate')
-import('ggplot2')
+# Importes para a solução da questão com supressão de mensagens para deixar
+# a saída mais limpa
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+  grafico <- modules::use('R/grafico.R'))))
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+  import('lubridate'))))
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+  import('ggplot2'))))
 
 # Exporta função
 export('resposta')

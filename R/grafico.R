@@ -1,8 +1,11 @@
 # Módulo responsável pela geração dos gráficos
 
-# Importes para a solução da questão
-import('ggplot2')
-import('stats')
+# Importes para a solução da questão com supressão de alertas para deixar
+# a saída mais limpa
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+  import('ggplot2'))))
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+  import('stats'))))
 
 # Configura tema para todos os gráficos
 export('configuraTema')
@@ -26,18 +29,20 @@ configuraTema <- function() {
 export('gravaEmDisco')
 gravaEmDisco <- function(arquivo) {
   cat('  --> Salvando gráfico em ./png/', arquivo, '.png\n', sep = '')
-  ggsave(
-    filename = paste('png/', arquivo, '.png', sep = ''),
-    plot = last_plot(),
-    device = NULL,
-    path = NULL,
-    scale = 1,
-    width = NA,
-    height = NA,
-    units = c("in", "cm", "mm"),
-    dpi = 300,
-    limitsize = TRUE,
-  )
+  suppressMessages(suppressWarnings(
+    ggsave(
+      filename = paste('png/', arquivo, '.png', sep = ''),
+      plot = last_plot(),
+      device = NULL,
+      path = NULL,
+      scale = 1,
+      width = NA,
+      height = NA,
+      units = c("in", "cm", "mm"),
+      dpi = 300,
+      limitsize = TRUE,
+    )
+  ))
 }
 
 # Imprime tabela com totalizadores

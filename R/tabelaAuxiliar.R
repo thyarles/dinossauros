@@ -4,13 +4,24 @@
 # CADMUN.xls  CIDCAP10.DBF  TABPAIS.DBF
 
 # Leitura da library
-import('foreign')
+suppressMessages(
+  suppressWarnings(
+    suppressPackageStartupMessages(
+      import('foreign')
+    )
+  )
+)
 
 # Leitura das UFs
 export('uf')
 uf <- function() {
-  df <- read.dbf('tabelas/TABUF.DBF')
-  df <- df[order(df$SIGLA_UF), ]
+  # Verifica se já existe para não apabar observações já calculadas
+  if (!exists('UF', envir = .GlobalEnv)) {
+    df <- read.dbf('tabelas/TABUF.DBF')
+    df <- df[order(df$SIGLA_UF), ]
+  } else {
+    df <- get('UF', envir = .GlobalEnv)
+  }
   return(df)
 }
 
