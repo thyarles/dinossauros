@@ -6,6 +6,9 @@
 # com a de 2016. Por exemplo, o campo Declaração (SEQ 01) é inexistente; existe
 # um campo chamado ORIGEM que não está listado na Estrutura e assim por diante.
 
+# Importação das funções de formatação
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+  grafico <- modules::use('R/grafico.R'))))
 # Na importação todos os dados vieram como FATORES, talvez uma anomalia desse DBC,
 # por isso é necessário converter tudo para numérico e string antes de operar
 
@@ -17,7 +20,7 @@ aplicaEstrutura <- function(df) {
   # Caso sim, não processa novamente para economizar processamento
   if (df$ESCMAE2010[1000] == '4 a 7 anos') {
 
-    cat('--> Dicionário de fator já aplicado, pulando...\n')
+    grafico$msgB('Amostra já formatada!')
 
   } else {
 

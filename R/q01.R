@@ -17,7 +17,7 @@ export('resposta')
 # Define função de resposta
 resposta <- function(df) {
 
-  cat('\n  --> Criando data frames para gerar tabelas e gráficos...\n')
+  grafico$msgB('Criando data frames para gerar tabelas e gráficos...')
 
   # Criação de dataframe com tipo de parto por Dia da Semana (PDS) sem NAs
   PDS <- data.frame(wday(df$DTNASC[!is.na(df$PARTO)]),
@@ -34,14 +34,9 @@ resposta <- function(df) {
   # Configuração dos fatores para melhor idenbtificação dos dias da semana
   PDS$DIA <- factor(PDS$DIA, levels = 1:7, labels = c('Dom.', 'Seg.', 'Ter.',
                                                       'Qua.', 'Qui.', 'Sex.', 'Sáb.'))
-  # Impressão da tabela
-  grafico$geraTabela('Parto por dia da semana', table(PDS$DIA, PDS$PARTO))
-
   # Configuração dos fatores para melhor idenbtificação de dias úteis / fds
   PDG$DIA <- factor(PDG$DIA, levels = 0:1, labels = c('Fim de semana',
                                                       'Dia útil'))
-  # Impressão da tabela
-  grafico$geraTabela('Parto por tipo de dia na semana', table(PDG$DIA, PDG$PARTO))
 
   # Geração do gráfico com o número de partos por dia da semana
   ggplot(as.data.frame(PDS), aes(x = DIA, fill = PARTO)) +
@@ -74,5 +69,9 @@ resposta <- function(df) {
       theme(legend.title = element_blank(), legend.position = "top")
     # Grava figura em disco para uso no Word (veja no diretório png)
     grafico$gravaEmDisco('q01-partosDiasUteis')
+
+    # Impressão da tabela
+    grafico$mTab('Q01', 'Parto por dia da semana', table(PDS$DIA, PDS$PARTO))
+    grafico$mTab('Q01', 'Parto por tipo de dia na semana', table(PDG$DIA, PDG$PARTO))
 
 }

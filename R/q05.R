@@ -152,43 +152,33 @@ resposta <- function(df) {
   #----- Geração das tabelas de contingência --------------------------------
 
 
-    # Gerando tabela de contingência partos por idade
+  # Gerando tabela de contingência partos por idade
   tab_partos_idade <- table(parto$IDADE_AGRUP,parto$PARTO )
-  #addmargins(tab_partos_idade)
-  grafico$geraTabela('Tabela de contigência Partos por Idade', tab_partos_idade)
-
+  grafico$mTab('Q05', 'Contigência Partos por Idade', tab_partos_idade)
 
   # Proporção das idades das mães (Variável resposta) por parto (v. explicativa)
-  grafico$geraTabela('Proporção das idades das mães',
-                     round(prop.table(tab_partos_idade,2)*100, digits = 3))
-
+  grafico$mTab('Q05', 'Proporção das idades das mães',
+               round(prop.table(tab_partos_idade,2)*100, digits = 3))
 
   # Proporção dos partos (Variável resposta) por idade (v. explicativa)
-  grafico$geraTabela('Proporção dos partos por idade',
-                     round(prop.table(tab_partos_idade,1)*100, digits = 3))
-
+  grafico$mTab('Q05', 'Proporção dos partos por idade',
+               round(prop.table(tab_partos_idade,1)*100, digits = 3))
 
   # Tabela de contigência partos por escolaridade
   tab_partos_escolaridade <- table(parto$ESCMAE,parto$PARTO )
-  #addmargins(tab_partos_escolaridade)
-  grafico$geraTabela('Contigência de partos por escolaridade',
-                     tab_partos_escolaridade)
+  grafico$mTab('Q05', 'Contigência de partos por escolaridade',
+               tab_partos_escolaridade)
 
-
-  grafico$geraTabela('Proporção dos partos por idade proporcional',
-                     round(prop.table(tab_partos_escolaridade,1)*100, digits = 3))
-
-
+  grafico$mTab('Q05', 'Proporção dos partos por idade proporcional',
+               round(prop.table(tab_partos_escolaridade,1)*100, digits = 3))
 
   # Tabela de contigência partos por cor
   tab_partos_cor <- table(parto$RACACORMAE,parto$PARTO )
 
-  grafico$geraTabela('Contigência de partos por cor',
-                     tab_partos_cor)
+  grafico$mTab('Q05', 'Contigência de partos por cor',
+               tab_partos_cor)
 
-
-  grafico$geraTabela('Proporção de contigência de partos por cor',
-                     round(prop.table(tab_partos_cor,1)*100, digits = 3))
-
+  grafico$mTab('Q05', 'Proporção de contigência de partos por cor',
+               round(prop.table(tab_partos_cor,1)*100, digits = 3))
 
   }
