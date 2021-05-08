@@ -21,14 +21,16 @@ configuraTema <- function() {
                                      hjust = .5,
                                      margin = margin(0, 0, 10, 0)),
         plot.tag = element_text(size = rel(0.8),
-                                vjust = 1)
+                                vjust = 1),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 0)
   ))
 }
 
 # Salva gráfico na pasta png
 export('gravaEmDisco')
 gravaEmDisco <- function(arquivo) {
-  cat('  --> Salvando gráfico em ./png/', arquivo, '.png\n', sep = '')
+  msgB(paste('Salvando gráfico em ./png/', arquivo, '.png', sep = ''))
   suppressMessages(suppressWarnings(
     ggsave(
       filename = paste('png/', arquivo, '.png', sep = ''),
@@ -46,9 +48,31 @@ gravaEmDisco <- function(arquivo) {
 }
 
 # Imprime tabela com totalizadores
-export('geraTabela')
-geraTabela <- function(titulo, tabela) {
-  cat ('\n  >>>', titulo, '\n')
+export('mTab')
+mTab <- function(questao, titulo, tabela) {
+  cat ('\n ----> Tabela:', questao, '-', titulo)
+  cat ('\n -----------------------------------------------------------------')
   print(addmargins(tabela))
-  cat ('\n')
+  cat (' -----------------------------------------------------------------')
+}
+
+# Formata impressão de tabela
+export('tab')
+tab <- function(titulo, df) {
+  cat ('\n ----> Tabela:', titulo)
+  cat ('\n -----------------------------------------------------------------\n')
+  print(df, row.names = FALSE)
+  cat (' -----------------------------------------------------------------')
+}
+
+# Formata mensagens do tipo A
+export('msgA')
+msgA <- function(titulo) {
+  cat ('\n\n', ' # ', titulo, '...', sep = '')
+}
+
+# Formata mensagens do tipo B
+export('msgB')
+msgB <- function(titulo) {
+  cat ('\n', '   --> ', titulo, sep = '')
 }

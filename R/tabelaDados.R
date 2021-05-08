@@ -27,12 +27,12 @@ total <- function(uf) {
     # Captura valor atual já calculado
     df <- get('UF', envir = .GlobalEnv)
     observacoes <- df$NUM_OBS_SINASC[df$SIGLA_UF==uf]
-    cat('-->', uf, 'tem ', observacoes,  'observações (cache).', '\n')
+    cat('\n', '  -->', uf, 'tem', observacoes,  'observações (cache).')
 
   } else {
 
     # Inicia feedback ao usuario
-    cat('-->', uf, 'tem ')
+    cat('\n', '  -->', uf, 'tem ')
 
     # Leitura do DBC para a UF, caso já não esteja carregado.
     if (!exists(uf, envir = .GlobalEnv)) {
@@ -43,7 +43,7 @@ total <- function(uf) {
     observacoes <- dim(get(uf,  envir = .GlobalEnv))[1]
 
     # Finaliza feedback ao usuario
-    cat(observacoes,  'observações.', '\n')
+    cat(observacoes,  'observações.')
 
   }
 
