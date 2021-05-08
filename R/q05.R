@@ -27,9 +27,9 @@ resposta <- function(df) {
   parto <- df[c('IDADEMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
 
   parto <- parto[(!is.na(parto$PARTO)) &
-                          (!is.na(parto$IDADEMAE))&
-                          (!is.na(parto$ESCMAE)) &
-                          (!is.na(parto$RACACORMAE)),]
+                  (!is.na(parto$IDADEMAE))&
+                  (!is.na(parto$ESCMAE)) &
+                  (!is.na(parto$RACACORMAE)),]
 
 
   # --- 2. Agrupando a variável idade
@@ -153,7 +153,7 @@ resposta <- function(df) {
 
 
   # Gerando tabela de contingência partos por idade
-  tab_partos_idade <- table(parto$IDADE_AGRUP,parto$PARTO )
+  tab_partos_idade <- table(parto$IDADE_AGRUP, parto$PARTO, exclude = 'Ignorado' )
   grafico$mTab('Q05', 'Contigência Partos por Idade', tab_partos_idade)
 
   # Proporção das idades das mães (Variável resposta) por parto (v. explicativa)
@@ -165,7 +165,7 @@ resposta <- function(df) {
                round(prop.table(tab_partos_idade,1)*100, digits = 3))
 
   # Tabela de contigência partos por escolaridade
-  tab_partos_escolaridade <- table(parto$ESCMAE,parto$PARTO )
+  tab_partos_escolaridade <- table(parto$ESCMAE,parto$PARTO, exclude = 'Ignorado')
   grafico$mTab('Q05', 'Contigência de partos por escolaridade',
                tab_partos_escolaridade)
 
@@ -173,7 +173,7 @@ resposta <- function(df) {
                round(prop.table(tab_partos_escolaridade,1)*100, digits = 3))
 
   # Tabela de contigência partos por cor
-  tab_partos_cor <- table(parto$RACACORMAE,parto$PARTO )
+  tab_partos_cor <- table(parto$RACACORMAE,parto$PARTO, exclude = 'Ignorado')
 
   grafico$mTab('Q05', 'Contigência de partos por cor',
                tab_partos_cor)

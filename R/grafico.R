@@ -57,7 +57,7 @@ mTab <- function(questao, titulo, tabela) {
 # Formata impressão de tabela
 export('tab')
 tab <- function(titulo, df) {
-  cat ('\n\n -', titulo)
+  cat ('\n ----> Tabela:', titulo)
   cat ('\n -----------------------------------------------------------------\n')
   print(df, row.names = FALSE)
   cat (' -----------------------------------------------------------------')
@@ -66,7 +66,7 @@ tab <- function(titulo, df) {
 # Formata mensagens do tipo A
 export('msgA')
 msgA <- function(titulo) {
-  cat ('\n\n', ' - ', titulo, '...', sep = '')
+  cat ('\n\n', ' # ', titulo, '...', sep = '')
 }
 
 # Formata mensagens do tipo B

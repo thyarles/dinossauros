@@ -71,7 +71,9 @@ resposta <- function(df) {
     grafico$gravaEmDisco('q01-partosDiasUteis')
 
     # Impressão da tabela
-    grafico$mTab('Q01', 'Parto por dia da semana', table(PDS$DIA, PDS$PARTO))
-    grafico$mTab('Q01', 'Parto por tipo de dia na semana', table(PDG$DIA, PDG$PARTO))
+    grafico$mTab('Q01', 'Parto por dia da semana',
+                 table(PDS$DIA, PDS$PARTO, exclude = 'Ignorado'))
+    grafico$mTab('Q01', 'Parto por tipo de dia na semana',
+                 table(PDG$DIA, PDG$PARTO, exclude = 'Ignorado'))
 
 }
