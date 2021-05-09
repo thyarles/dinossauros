@@ -26,24 +26,39 @@ resposta <- function(df) {
   # interessam
   parto <- df[c('IDADEMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
 
-  parto <-  parto[(!is.na(parto$PARTO)) & (parto$PARTO != 'Ignorado') &
-                  (!is.na(parto$IDADEMAE))& (parto$IDADEMAE != 'Ignorado') &
+  parto <- parto[(!is.na(parto$PARTO)) &
+                  (!is.na(parto$IDADEMAE))&
                   (!is.na(parto$ESCMAE)) & (parto$ESCMAE != 'Ignorado') &
-                  (!is.na(parto$RACACORMAE))& (parto$RACACORMAE != 'Ignorado'),]
+                  (!is.na(parto$RACACORMAE)),]
 
-
-  parto <- droplevels(parto)
 
   # --- 2. Agrupando a variável idade
 
   parto$IDADE_AGRUP <- parto$IDADEMAE
 
-  parto$IDADE_AGRUP[parto$IDADEMAE<20] <- '00 |- 20'
-  parto$IDADE_AGRUP[(parto$IDADEMAE>=20) & (parto$IDADEMAE<25)] <- '20 |- 25'
-  parto$IDADE_AGRUP[(parto$IDADEMAE>=25) & (parto$IDADEMAE<30)] <- '25 |- 30'
-  parto$IDADE_AGRUP[(parto$IDADEMAE>=30) & (parto$IDADEMAE<35)] <- '30 |- 35'
-  parto$IDADE_AGRUP[(parto$IDADEMAE>=35) & (parto$IDADEMAE<40)] <- '35 |- 40'
-  parto$IDADE_AGRUP[parto$IDADEMAE>=40] <- '40 |- '
+  parto$IDADE_AGRUP[parto$IDADEMAE<18] <- '13 |- 18'
+  parto$IDADE_AGRUP[(parto$IDADEMAE>=18) & (parto$IDADEMAE<23)] <- '18 |- 23'
+  parto$IDADE_AGRUP[(parto$IDADEMAE>=23) & (parto$IDADEMAE<28)] <- '23 |- 28'
+  parto$IDADE_AGRUP[(parto$IDADEMAE>=28) & (parto$IDADEMAE<33)] <- '28 |- 33'
+  parto$IDADE_AGRUP[(parto$IDADEMAE>=33) & (parto$IDADEMAE<38)] <- '33 |- 38'
+  parto$IDADE_AGRUP[(parto$IDADEMAE>=38) & (parto$IDADEMAE<43)] <- '38 |- 43'
+  parto$IDADE_AGRUP[parto$IDADEMAE>=43] <- '43 |- '
+
+  parto$IDADE_AGRUP_GRAF <- parto$IDADEMAE
+
+  parto$IDADE_AGRUP_GRAF[parto$IDADEMAE<18] <- '13 a 18 anos'
+  parto$IDADE_AGRUP_GRAF[(parto$IDADEMAE>=18) & (parto$IDADEMAE<23)] <- '18 a 23 anos'
+  parto$IDADE_AGRUP_GRAF[(parto$IDADEMAE>=23) & (parto$IDADEMAE<28)] <- '23 a 28 anos'
+  parto$IDADE_AGRUP_GRAF[(parto$IDADEMAE>=28) & (parto$IDADEMAE<33)] <- '28 a 33 anos'
+  parto$IDADE_AGRUP_GRAF[(parto$IDADEMAE>=33) & (parto$IDADEMAE<38)] <- '33 a 38 anos'
+  parto$IDADE_AGRUP_GRAF[(parto$IDADEMAE>=38) & (parto$IDADEMAE<43)] <- '38 a 43 anos'
+  parto$IDADE_AGRUP_GRAF[parto$IDADEMAE>=43] <- '43 anos ou mais'
+
+
+  proporcao_partos = round(length(parto[parto$PARTO != "Vaginal",5]) / length(parto$PARTO),5)
+  print(paste("Os partos cirúrgicos representam",
+              as.character((proporcao_partos*100)),
+              "% dos partos no Brasil"))
 
   # Geração do gráfico com o número de partos pela escolaridade da mãe
   ggplot(parto) +
@@ -59,7 +74,7 @@ resposta <- function(df) {
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q01-partosPorEscolaridade')
+  grafico$gravaEmDisco('q05-partosPorEscolaridade')
 
 
   #----- Gera o gráfico do número de partos a partir das idades das mães----
@@ -77,7 +92,7 @@ resposta <- function(df) {
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q01-partosPorEscolaridade')
+  grafico$gravaEmDisco('q05-partosPorIdade')
 
 
 
@@ -111,7 +126,7 @@ resposta <- function(df) {
      #Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q01-partosPorEscolaridade')
+  grafico$gravaEmDisco('q05-partosPontosIdadeMae')
 
 
   #----- Gera o gráfico do número de partos a partir das idades agrupadas----
@@ -129,7 +144,24 @@ resposta <- function(df) {
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q01-partosPorEscolaridade')
+  grafico$gravaEmDisco('q05-partosIdadesAgrupadas')
+
+  #----- Gera outro gráfico do número de partos a partir das idades agrupadas---
+  # Geração do gráfico com o número de partos pela idade das mães
+  ggplot(parto) +
+    # Gráfico tipo barras
+    geom_bar(aes(x = IDADE_AGRUP_GRAF, fill = PARTO), position = 'fill') +
+    # Escala de cor leve
+    scale_fill_brewer() +
+    # Nomes dos eixos, título e subtítulo
+    labs(x = 'Idade da Mãe', y = 'N° partos',
+         title = 'Número de partos por idade agrupada',
+         subtitle = 'Registrados no Brasil em 2016',
+         caption = 'Fonte: SINASC 2016') +
+    # Retira título da legenda e posiciona no topo
+    theme(legend.title = element_blank(), legend.position = "top")
+  # Grava figura em disco para uso no Word (veja no diretório png)
+  grafico$gravaEmDisco('q05-partosIdadesAgrupadas')
 
 
   #----- Gera o gráfico do número de partos a partir da cor das mães----
@@ -147,42 +179,40 @@ resposta <- function(df) {
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q01-partosPorEscolaridade')
+  grafico$gravaEmDisco('q05-partosCorMae')
 
 
 
   #----- Geração das tabelas de contingência --------------------------------
 
 
-    # Gerando tabela de contingência partos por idade
-  tab_partos_idade <- table(parto$IDADE_AGRUP,parto$PARTO )
-  #addmargins(tab_partos_idade)
-  cat('\n  --> Criando tabela de partos por idade...\n')
-  print((tab_partos_idade))
-
+  # Gerando tabela de contingência partos por idade
+  tab_partos_idade <- table(parto$IDADE_AGRUP, parto$PARTO, exclude = 'Ignorado' )
+  grafico$mTab('Q05', 'Contigência Partos por Idade', tab_partos_idade)
 
   # Proporção das idades das mães (Variável resposta) por parto (v. explicativa)
-  print(prop.table(tab_partos_idade,2))#*100
+  grafico$mTab('Q05', 'Proporção das idades das mães',
+               round(prop.table(tab_partos_idade,2)*100, digits = 3))
 
   # Proporção dos partos (Variável resposta) por idade (v. explicativa)
-  print(prop.table(tab_partos_idade,1))#*100
-
+  grafico$mTab('Q05', 'Proporção dos partos por idade',
+               round(prop.table(tab_partos_idade,1)*100, digits = 3))
 
   # Tabela de contigência partos por escolaridade
-  tab_partos_escolaridade <- table(parto$ESCMAE,parto$PARTO )
-  #addmargins(tab_partos_escolaridade)
-  print(tab_partos_escolaridade)
-  print(prop.table(tab_partos_escolaridade,1))#*100
+  tab_partos_escolaridade <- table(parto$ESCMAE,parto$PARTO, exclude = 'Ignorado')
+  grafico$mTab('Q05', 'Contigência de partos por escolaridade',
+               tab_partos_escolaridade)
 
+  grafico$mTab('Q05', 'Proporção dos partos por idade proporcional',
+               round(prop.table(tab_partos_escolaridade,1)*100, digits = 3))
 
   # Tabela de contigência partos por cor
-  tab_partos_cor <- table(parto$RACACORMAE,parto$PARTO )
-  #addmargins(tab_partos_cor)
-  print(tab_partos_cor)
-  print(prop.table(tab_partos_cor,1))#*100
+  tab_partos_cor <- table(parto$RACACORMAE,parto$PARTO, exclude = 'Ignorado')
 
+  grafico$mTab('Q05', 'Contigência de partos por cor',
+               tab_partos_cor)
 
-  }
+  grafico$mTab('Q05', 'Proporção de contigência de partos por cor',
+               round(prop.table(tab_partos_cor,1)*100, digits = 3))
 
-#parto[parto$PARTO == 'Ignorado',]
-#df[c('PARTO', 'IDADEMAE')][df$PARTO == 'Ignorado',]
+}
