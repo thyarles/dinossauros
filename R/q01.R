@@ -77,8 +77,8 @@ resposta <- function(df) {
   #7h |- 13h, 13h |- 19h, 19h |- 1h, 1h |- 7h
   df$GHORANASC <- as.integer(substr(df$HORANASC, start = 0, stop = 2))
   df$GHORANASC <- cut(df$GHORANASC, breaks = c(0, 6, 12, 18, 23),
-                                    labels = c('0 às 6', '7 às 12',
-                                               '13 às 18', '19 às 23'),
+                                    labels = c('0 às 6:59', '7 às 12:59',
+                                               '13 às 18:59', '19 às 23:59'),
                                     include.lowest = TRUE)
 
   # g parto/dia ----
@@ -131,6 +131,48 @@ resposta <- function(df) {
       theme(legend.title = element_blank(), legend.position = "top")
     # Grava figura em disco para uso no Word (veja no diretório png)
     grafico$gravaEmDisco('q01-partosHora')
+
+    # g parto/t/i/e ----
+    # Geração do gráfico com o número de partos por horas
+    ggplot(df[!is.na(df$GIDADE), ],
+      aes(x = GIDADE, fill = ESTCIVMAE, group = ESTCIVMAE)) +
+      # Gráfico tipo barras
+      geom_bar(position="dodge", na.rm = TRUE) +
+      # Escala de cor leve
+      scale_fill_brewer() +
+      facet_grid(PARTO~ .) +
+      # Nomes dos eixos, título e subtítulo
+      labs(x = 'Idade', y = 'N° partos',
+           title = 'Partos por tipo, idade e estado civil',
+           subtitle = 'Registrados no Brasil em 2016',
+           caption = 'Fonte: SINASC 2016') +
+      # Retira título da legenda e posiciona no topo
+      theme(legend.title = element_blank(), legend.position = "top",
+            strip.background = element_blank(),
+            strip.text.x = element_blank()
+      )
+    # Grava figura em disco para uso no Word (veja no diretório png)
+    grafico$gravaEmDisco('q01-partoTipoIdadeEstCiv')
+
+    # g pxxx ----
+    # Geração do gráfico com o número de partos por horas
+    ggplot(df[df$ESTCIVMAE != 'Outros' & !is.na(df$GHORANASC), ],
+           aes(x = DIA, fill = PARTO)) +
+      # Gráfico tipo barras
+      geom_bar(position = "fill") +
+      # Escala de cor leve
+      scale_fill_brewer() +
+      facet_grid(vars(GHORANASC), vars(ESTCIVMAE)) +
+      # Nomes dos eixos, título e subtítulo
+      labs(x = 'Dias da semana', y = 'Densidade',
+           title = 'Partos por tipo, idade, dia da semana e estado civil',
+           subtitle = 'Registrados no Brasil em 2016',
+           caption = 'Fonte: SINASC 2016') +
+      # Retira título da legenda e posiciona no topo
+      theme(legend.title = element_blank(), legend.position = "top",
+            strip.background = element_blank())
+    # Grava figura em disco para uso no Word (veja no diretório png)
+    grafico$gravaEmDisco('q01-partoTipoIdadeSemanaCivil')
 
     # Impressão das tabelas ----
     grafico$mTab('Q01', 'Parto por dia da semana',
