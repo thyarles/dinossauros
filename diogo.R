@@ -1,3 +1,7 @@
+library('ggplot2')
+library('cowplot')
+
+
 #3)Descrever a variável peso do recém-nascidos da amostra.
 
 # ------------------------------------------------------------------------------
@@ -240,19 +244,38 @@ amplInt
 # indica que as observações possuem uma assimetria a esquerda.
 
 # ------------------------------------------------------------------------------
-#BOXPLOT
+#BOXPLOT (UMA VARIÁVEL) sem ggplot
 # ------------------------------------------------------------------------------
 
-boxplot(AMOSTRA$PESO,horizontal = TRUE, main="Peso dos recém-nascidos")
-
-
-
-#DEVO RETIRAR OS DADOS DAS EXTREMIDADES??????
+boxplot(AMOSTRA$PESO,
+        horizontal = TRUE,
+        main="Peso dos recém-nascidos",
+        names=c("Peso"),
+        xlabel="Peso")
 
 # ------------------------------------------------------------------------------
-#
+#BOXPLOT (UMA VARIÁVEL)com ggplot
 # ------------------------------------------------------------------------------
-#Análise do PESO e SEXO
+
+box1 <- ggplot(AMOSTRA, aes(x = PESO, y = "")) +
+  geom_boxplot()
+
+box2 <- ggplot(AMOSTRA, aes(x = PESO, y = "")) +
+  geom_boxplot(width = 0.5, col = "black", fill = "gray")+ # boxplot
+  # mostra a média por um ponto
+  stat_summary(geom = "point", fun = mean) +
+  # adiciona uma linha na média geral
+  geom_hline(yintercept = resultMedia, linetype = "dashed")+
+  labs(x = "Peso", y = "")
+
+#Só imprimir o segundo modelo
+
+plot_grid(box2, labels = c(""))
+
+
+
+# ------------------------------------------------------------------------------
+#PESO e SEXO
 # ------------------------------------------------------------------------------
 
 dados1 <- AMOSTRA[AMOSTRA$SEXO=="Masculino",]
@@ -271,6 +294,44 @@ AMOSTRA %>%
   summarise(Media = mean(PESO), n = n(),
             Desvio_Padrao=sd(PESO),
             Mediana=quantile(PESO, 0.5) )
+
+#   Criar uma tabela com as medidas resumo  #
+
+# ------------------------------------------------------------------------------
+#BOXPLOT com duas variáveis (Peso e sexo)
+# ------------------------------------------------------------------------------
+
+boxplot(dados1$PESO,dados2$PESO,
+        horizontal = TRUE,
+        main="Peso dos recém-nascidos",
+        names=c("Masculino","Feminino"))
+        #xlabel="Peso")
+# ------------------------------------------------------------------------------
+#ANÁLISE:
+# A medidas resumo da variável PESO dividida por Gênero, mostra que crianças
+# do sexo masculino tiveram uma maior quabtidade de nascimentos e valores levemente
+# maiores para a as medidas de Média, mediana e Moda. Esse resultado é
+# perfeitamente aceitável e de conhecimento comum na comunidade. (REFERÊNCIAS)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # ------------------------------------------------------------------------------
@@ -313,7 +374,7 @@ ggplot(data = dados) +
                  mapping = aes(x = Renda, y=(..count..)/sum(..count..)), fill="blue", color="black")
 
 
-ggplot(data = dados) +
+ggplot(data = dados1) +
   labs(x="Renda", y="Frequ?ncia relativa") +
   scale_x_discrete(limits = c(seq(0,7,0.5)))+
   geom_histogram(binwidth = 0.5,mapping = aes(x = Renda, y=(..count..)/sum(..count..)), fill="blue", color="black")+
@@ -331,10 +392,12 @@ ggplot(data = dados, mapping = aes(x = Sexo, y = Renda)) +
 # Visualiza??o de duas variaveis quantitativa
 
 # Diagrama de dispers?o
-ggplot(data = dados) +
-  geom_point(mapping = aes(x = Idade, y=Renda))
+ggplot(data = dados1) +
+  geom_point(mapping = aes(x = PESO, y=""))
 
-cor(dados$Idade, dados$Renda)
+# UTILIZAR NA QUESTÃO 4
+
+cor(AMOSTRA$PESO, AMOSTRA$IDADEMAE)
 
 
 # com cores identificando grupos
@@ -347,6 +410,20 @@ ggplot(data = dados) +
 ggplot(data = dados) +
   geom_point(mapping = aes(x = Idade, y=Renda)) +
   facet_wrap(~ Sexo, nrow = 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # ------------------------------------------------------------------------------
@@ -373,16 +450,16 @@ ggplot(AMOSTRA) +
   aes(x = PESO) +
   geom_histogram(fill = 'lightblue',
                  col = 'black',
-                 bins = 45,
+                 bins = 43,
                  alpha = 0.8,
                  aes(y=..density..)) +
   stat_function(fun = dnorm, args = c(mean = mean(AMOSTRA$PESO),
                                       sd = sd(AMOSTRA$PESO))) +
   labs(title = 'Peso dos bebês nascidos em hospitais - Brasil - 2016',
        caption = 'Fonte: SISNAC XXX')+
-  geom_vline(aes(xintercept=mean(PESO,na.rm = T), color = 'mean'),
+  geom_vline(aes(xintercept=mean(PESO,na.rm = T), color = 'média'),
              show.legend = T )+
-  geom_vline(aes(xintercept=median(PESO,na.rm = T), color='median'),
+  geom_vline(aes(xintercept=median(PESO,na.rm = T), color='mediana'),
              show.legend = T)
 
 
