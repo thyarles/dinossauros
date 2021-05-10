@@ -16,14 +16,15 @@ configuraTema <- function() {
         plot.title = element_text(face = 'bold',
                                   hjust = .5,
                                   margin = margin(0, 0, 5, 0),
-                                  size = 14),
+                                  size = rel(1)),
         plot.subtitle = element_text(family = 'Playfair',
                                      hjust = .5,
-                                     margin = margin(0, 0, 10, 0)),
-        plot.tag = element_text(size = rel(0.8),
+                                     margin = margin(0, 0, 10, 0),
+                                     size = rel(0.8)),
+        plot.tag = element_text(size = rel(0.5),
                                 vjust = 1),
         axis.title.x = element_text(vjust = -2),
-        axis.title.y = element_text(vjust = 0)
+        axis.title.y = element_text(vjust = 3, angle = 90)
   ))
 }
 
@@ -37,7 +38,7 @@ gravaEmDisco <- function(arquivo) {
       plot = last_plot(),
       device = NULL,
       path = NULL,
-      scale = 1,
+      scale = 1.5,
       width = NA,
       height = NA,
       units = c("in", "cm", "mm"),

@@ -1,0 +1,244 @@
+[1] "Carregando e/ou instalando bibliotecas necessárias..."
+ 
+ ### Início da execução.
+ -----------------------------------------------------------------
+
+ # Carregando tabelas auxiliares...
+
+ # Carregando e calculando observações por UF...
+   --> AC tem 15773 observações.
+   --> AL tem 48164 observações.
+   --> AM tem 76703 observações.
+   --> AP tem 15521 observações.
+   --> BA tem 199830 observações.
+   --> CE tem 126246 observações.
+   --> DF tem 43340 observações.
+   --> ES tem 53413 observações.
+   --> GO tem 95563 observações.
+   --> MA tem 110493 observações.
+   --> MG tem 253520 observações.
+   --> MS tem 42432 observações.
+   --> MT tem 53531 observações.
+   --> PA tem 137681 observações.
+   --> PB tem 56083 observações.
+   --> PE tem 130733 observações.
+   --> PI tem 46986 observações.
+   --> PR tem 155066 observações.
+   --> RJ tem 219129 observações.
+   --> RN tem 45366 observações.
+   --> RO tem 26602 observações.
+   --> RR tem 11376 observações.
+   --> RS tem 141411 observações.
+   --> SC tem 95313 observações.
+   --> SE tem 32218 observações.
+   --> SP tem 601437 observações.
+   --> TO tem 23870 observações.
+
+ # Calculando amostra proporcional para cada UF...
+ ----> Tabela: Número de observações totais e da amostra por UF
+ -----------------------------------------------------------------
+ SIGLA_UF NUM_OBS_SINASC AMOSTRA
+       AC          15773      11
+       AL          48164      34
+       AM          76703      54
+       AP          15521      11
+       BA         199830     140
+       CE         126246      88
+       DF          43340      30
+       ES          53413      37
+       GO          95563      67
+       MA         110493      77
+       MG         253520     177
+       MS          42432      30
+       MT          53531      37
+       PA         137681      96
+       PB          56083      39
+       PE         130733      91
+       PI          46986      33
+       PR         155066     109
+       RJ         219129     153
+       RN          45366      32
+       RO          26602      19
+       RR          11376       8
+       RS         141411      99
+       SC          95313      67
+       SE          32218      23
+       SP         601437     421
+       TO          23870      17
+ -----------------------------------------------------------------
+
+ # Configrando o SEED para 1234...
+
+ # Salvando amostras de cada UF no dataframe AMOSTRAS...
+
+ # Limpando dados para otimizar memória...
+
+ # Formatando AMOSTRA de acordo com dicionário de dados...
+
+ # Configurando tema GGPLOT para manter padrão...
+
+ # Gerando dados para a QUESTÃO 01...
+   --> Criando data frames para gerar tabelas e gráficos...
+   --> Salvando gráfico em ./png/q01-partosDiaSemana.png
+   --> Salvando gráfico em ./png/q01-partosDiasUteis.png
+   --> Salvando gráfico em ./png/q01-partosHora.png
+   --> Salvando gráfico em ./png/q01-partoTipoIdadeEstCiv.png
+   --> Salvando gráfico em ./png/q01-partoTipoIdadeSemanaCivil.png
+ ----> Tabela: Q01 - Parto por dia da semana
+ -----------------------------------------------------------------      
+       Vaginal Cesáreo  Sum
+  Dom.     125     103  228
+  Seg.     122     172  294
+  Ter.     140     187  327
+  Qua.     108     189  297
+  Qui.     137     169  306
+  Sex.     138     161  299
+  Sáb.     132     116  248
+  Sum      902    1097 1999
+ -----------------------------------------------------------------
+ ----> Tabela: Q01 - Parto por tipo de dia na semana
+ -----------------------------------------------------------------               
+                Vaginal Cesáreo  Sum
+  Fim de semana     257     219  476
+  Dia útil          645     878 1523
+  Sum               902    1097 1999
+ -----------------------------------------------------------------
+ ----> Tabela: Q01 - Parto por hora
+ -----------------------------------------------------------------             
+              Vaginal Cesáreo  Sum
+  0 às 6:59       246      94  340
+  7 às 12:59      242     421  663
+  13 às 18:59     232     377  609
+  19 às 23:59     181     203  384
+  Sum             901    1095 1996
+ -----------------------------------------------------------------
+ ----> Tabela: Q01 - Parto por idade
+ -----------------------------------------------------------------              
+               Vaginal Cesáreo  Sum
+  13 a 17 anos     175      96  271
+  18 a 27 anos     463     506  969
+  28 a 37 anos     246     443  689
+  38 a 48 anos      17      52   69
+  Sum              901    1097 1998
+ -----------------------------------------------------------------
+ ----> Tabela: Q01 - Parto por Peso
+ -----------------------------------------------------------------           
+            Vaginal Cesáreo  Sum
+  0,4 a 1,4      14      21   35
+  1,5 a 1,9      13      25   38
+  2,0 a 2,4      57      69  126
+  2,5 a 2,9     263     242  505
+  3,0 a 3,4     387     460  847
+  3,5 a 4,8     167     280  447
+  Sum           901    1097 1998
+ -----------------------------------------------------------------
+ ----> Tabela: Q01 - Parto por Estado civil da mãe
+ -----------------------------------------------------------------               
+                Vaginal Cesáreo  Sum
+  Solteira          445     438  883
+  Casada            181     417  598
+  União estável     263     221  484
+  Outros             13      21   34
+  Sum               902    1097 1999
+ -----------------------------------------------------------------
+ ----> Tabela: Q01 - Parto por Escolariadade da mãe
+ -----------------------------------------------------------------             
+              Vaginal Cesáreo  Sum
+  Nenhuma           5       7   12
+  1 a 3 anos       34      16   50
+  4 a 7 anos      199     131  330
+  8 a 11 anos     562     648 1210
+  12 e mais        86     285  371
+  Sum             886    1087 1973
+ -----------------------------------------------------------------
+
+ # Gerando dados para a QUESTÃO 02...NULL
+
+
+ # Gerando dados para a QUESTÃO 03...NULL
+
+
+ # Gerando dados para a QUESTÃO 04...NULL
+
+
+ # Gerando dados para a QUESTÃO 05...
+   --> Salvando gráfico em ./png/q05-partosPorEscolaridade.png
+   --> Salvando gráfico em ./png/q05-partosPorIdade.png
+   --> Salvando gráfico em ./png/q05-partosPontosIdadeMae.png
+   --> Salvando gráfico em ./png/q05-partosIdadesAgrupadas.png
+   --> Salvando gráfico em ./png/q05-partosCorMae.png
+ ----> Tabela: Q05 - Contigência Partos por Idade
+ -----------------------------------------------------------------          
+           Vaginal Cesáreo  Sum
+  00 |- 20     222     136  358
+  20 |- 25     241     243  484
+  25 |- 30     171     238  409
+  30 |- 35     129     243  372
+  35 |- 40      76     150  226
+  40 |-          8      40   48
+  Sum          847    1050 1897
+ -----------------------------------------------------------------
+ ----> Tabela: Q05 - Proporção das idades das mães
+ -----------------------------------------------------------------          
+           Vaginal Cesáreo     Sum
+  00 |- 20  26.210  12.952  39.162
+  20 |- 25  28.453  23.143  51.596
+  25 |- 30  20.189  22.667  42.856
+  30 |- 35  15.230  23.143  38.373
+  35 |- 40   8.973  14.286  23.259
+  40 |-      0.945   3.810   4.755
+  Sum      100.000 100.001 200.001
+ -----------------------------------------------------------------
+ ----> Tabela: Q05 - Proporção dos partos por idade
+ -----------------------------------------------------------------          
+           Vaginal Cesáreo     Sum
+  00 |- 20  62.011  37.989 100.000
+  20 |- 25  49.793  50.207 100.000
+  25 |- 30  41.809  58.191 100.000
+  30 |- 35  34.677  65.323 100.000
+  35 |- 40  33.628  66.372 100.000
+  40 |-     16.667  83.333 100.000
+  Sum      238.585 361.415 600.000
+ -----------------------------------------------------------------
+ ----> Tabela: Q05 - Contigência de partos por escolaridade
+ -----------------------------------------------------------------             
+              Vaginal Cesáreo  Sum
+  Nenhuma           5       7   12
+  1 a 3 anos       32      15   47
+  4 a 7 anos      187     125  312
+  8 a 11 anos     541     621 1162
+  12 e mais        75     276  351
+  Sum             840    1044 1884
+ -----------------------------------------------------------------
+ ----> Tabela: Q05 - Proporção dos partos por idade proporcional
+ -----------------------------------------------------------------             
+              Vaginal Cesáreo     Sum
+  Nenhuma      41.667  58.333 100.000
+  1 a 3 anos   68.085  31.915 100.000
+  4 a 7 anos   59.936  40.064 100.000
+  8 a 11 anos  46.558  53.442 100.000
+  12 e mais    21.368  78.632 100.000
+  Sum         237.614 262.386 500.000
+ -----------------------------------------------------------------
+ ----> Tabela: Q05 - Contigência de partos por cor
+ -----------------------------------------------------------------          
+           Vaginal Cesáreo  Sum
+  Branca       235     463  698
+  Preta         53      54  107
+  Amarela        2       5    7
+  Parda        552     523 1075
+  Indígena       5       5   10
+  Sum          847    1050 1897
+ -----------------------------------------------------------------
+ ----> Tabela: Q05 - Proporção de contigência de partos por cor
+ -----------------------------------------------------------------          
+           Vaginal Cesáreo     Sum
+  Branca    33.668  66.332 100.000
+  Preta     49.533  50.467 100.000
+  Amarela   28.571  71.429 100.000
+  Parda     51.349  48.651 100.000
+  Indígena  50.000  50.000 100.000
+  Sum      213.121 286.879 500.000
+ -----------------------------------------------------------------
+ ### Script executado com sucesso!
+
