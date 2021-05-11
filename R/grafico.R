@@ -30,22 +30,31 @@ configuraTema <- function() {
 
 # Salva gráfico na pasta png
 export('gravaEmDisco')
-gravaEmDisco <- function(arquivo) {
-  msgB(paste('Salvando gráfico em ./png/', arquivo, '.png', sep = ''))
+gravaEmDisco <- function(questao, titulo, altura = NA, largura = NA, escala = 1.0) {
+  # Monta caminho
+  diretorio <- paste('png/', questao, sep = '')
+  # Cria diretório
+  dir.create(diretorio, showWarnings = FALSE, recursive = TRUE, mode = "0777")
+  # Nome do arquivo
+  arquivo <- paste(titulo,  '.png', sep = '')
+  # Mostra mensagem
+  msgB(paste('Salvando gráfico', titulo, 'no diretório', diretorio, '...'))
   suppressMessages(suppressWarnings(
     ggsave(
-      filename = paste('png/', arquivo, '.png', sep = ''),
+      filename = arquivo,
       plot = last_plot(),
       device = NULL,
-      path = NULL,
-      scale = 1.5,
-      width = NA,
-      height = NA,
-      units = c("in", "cm", "mm"),
+      path = diretorio,
+      scale = escala,
+      width = largura,
+      height = altura,
+      units = 'cm',
+      #units = c("in", "cm", "mm"),
       dpi = 300,
-      limitsize = TRUE,
+      limitsize = TRUE
     )
   ))
+
 }
 
 # Imprime tabela com totalizadores

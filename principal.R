@@ -12,24 +12,23 @@
 # > 202046541 Rafael Ribeiro Araújo
 
 # modulos-----------------------------------------------------------------------
+# Ativa os nossos módulos no diretório R
+  print('Carregando e/ou instalando bibliotecas necessárias...')
+  if (!require('modules')) install.packages('modules')      # Leitura dos módulos
+  if (!require('read.dbc')) install.packages('read.dbc')    # Leitura de DBC
+  if (!require('foreign')) install.packages('foreign')      # Leitura de DBF
+  if (!require('ggplot2')) install.packages('ggplot2')      # Plotagem de gráficos
+  if (!require('lubridate')) install.packages('lubridate')  # Conversão de datas
+  sinasc <- modules::use('R')
 
-  # Ativa os nossos módulos no diretório R
-    print('Carregando e/ou instalando bibliotecas necessárias...')
-    if (!require('modules')) install.packages('modules')      # Leitura dos módulos
-    if (!require('read.dbc')) install.packages('read.dbc')    # Leitura de DBC
-    if (!require('foreign')) install.packages('foreign')      # Leitura de DBF
-    if (!require('ggplot2')) install.packages('ggplot2')      # Plotagem de gráficos
-    if (!require('lubridate')) install.packages('lubridate')  # Conversão de datas
-    sinasc <- modules::use('R')
-
-  # Carrega pacotes globais para plotagem de gráficos com supressão de mensagens
-    suppressMessages(
-      suppressWarnings(
-        suppressPackageStartupMessages(
-          library('ggplot2')
-        )
+# Carrega pacotes globais para plotagem de gráficos com supressão de mensagens
+  suppressMessages(
+    suppressWarnings(
+      suppressPackageStartupMessages(
+        library('ggplot2')
       )
     )
+  )
 
 # tab aux-----------------------------------------------------------------------
 # Leitura das tabelas auxiliares
@@ -116,6 +115,7 @@
 # 1. Pode-se dizer que o número de partos varia entre os dias da semana?
 #    Por que?
   sinasc$grafico$msgA('Gerando dados para a QUESTÃO 01')
+  sinasc <- modules::use('R')
   sinasc$q01$resposta(AMOSTRA)
 
 # questao2----------------------------------------------------------------------
