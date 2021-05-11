@@ -217,6 +217,26 @@ resposta <- function(df) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   #---- Cálculo dos coeficientes de contingencias ------------
 
   #Calcula o coeficiente de contingências - parto / idade
