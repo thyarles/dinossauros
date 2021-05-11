@@ -24,6 +24,7 @@ resposta <- function(df) {
 
   #1. Cria o dataframe parto como sub-dataframe de df e exclui os que não
   # interessam
+  questao <- 'q05'
   parto <- df[c('IDADEMAE', 'ESCMAE', 'RACACORMAE', 'PARTO')]
 
   parto <- parto[(!is.na(parto$PARTO)) &
@@ -61,40 +62,44 @@ resposta <- function(df) {
               "% dos partos no Brasil"))
 
   # Geração do gráfico com o número de partos pela escolaridade da mãe
+  titulo <- 'Partos de acordo com a escolaridade da mãe'
   ggplot(parto) +
     # Gráfico tipo barras
     geom_bar(aes(x = ESCMAE, fill = PARTO), position = 'fill') +
     # Escala de cor leve
     scale_fill_brewer() +
+    # Troca densidade por percentual
+    scale_y_continuous(labels = scales::percent) +
     # Nomes dos eixos, título e subtítulo
-    labs(x = 'Escolaridade da Mãe', y = 'N° partos',
-         title = 'Número de partos pela escolaridade da mãe',
+    labs(x = 'Escolaridade da mãe', y = NULL,
+         title = titulo,
          subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q05-partosPorEscolaridade')
+  grafico$gravaEmDisco(questao, titulo, altura = 7)
 
 
   #----- Gera o gráfico do número de partos a partir das idades das mães----
   # Geração do gráfico com o número de partos pela idade das mães
+  titulo <- 'Partos de acordo com a idade da mãe'
   ggplot(parto) +
     # Gráfico tipo barras
     geom_bar(aes(x = IDADEMAE, fill = PARTO), position = 'fill') +
     # Escala de cor leve
     scale_fill_brewer() +
+    # Troca densidade por percentual
+    scale_y_continuous(labels = scales::percent) +
     # Nomes dos eixos, título e subtítulo
-    labs(x = 'Idade da Mãe', y = 'N° partos',
-         title = 'Número de partos pela idade da mãe',
+    labs(x = 'Idade da Mãe', y = NULL,
+         title = titulo,
          subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q05-partosPorIdade')
-
-
+  grafico$gravaEmDisco(questao, titulo, altura = 7)
 
 
   #-- Gera o gráfico de pontos do tipo de partos a partir das idades das mães-
@@ -112,79 +117,68 @@ resposta <- function(df) {
   DF_parto_idade$Var2<-NULL
 
 
+  titulo <- 'Tipos de parto pela idade da mãe'
   ggplot(DF_parto_idade) +
     # Gráfico de pontos - vermelhos são Cesários e azuis vaginais
-    geom_point(aes(x = Idade, y = Cesario),color = 'red') +
+    geom_point(aes(x = Idade, y = Cesario), color = 'red') +
     geom_point(aes(x = Idade, y = Vaginal), color = 'blue') +
     # Escala de cor leve
     scale_fill_brewer() +
+    # Troca densidade por percentual
+    scale_y_continuous(labels = scales::percent) +
     # Nomes dos eixos, título e subtítulo
     labs(x = 'Idade da Mãe', y = 'Proporção de partos',
          title = 'Tipos de parto pela idade da mãe',
          subtitle = 'Registrados no Brasil em 2016',
-         caption = 'Fonte: SINASC 2016')
+         caption = 'Fonte: SINASC 2016') +
      #Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q05-partosPontosIdadeMae')
+  grafico$gravaEmDisco(questao, titulo, largura = 20, altura = 7)
 
 
   #----- Gera o gráfico do número de partos a partir das idades agrupadas----
   # Geração do gráfico com o número de partos pela idade das mães
-  ggplot(parto) +
-    # Gráfico tipo barras
-    geom_bar(aes(x = IDADE_AGRUP, fill = PARTO), position = 'fill') +
-    # Escala de cor leve
-    scale_fill_brewer() +
-    # Nomes dos eixos, título e subtítulo
-    labs(x = 'Idade da Mãe', y = 'N° partos',
-         title = 'Número de partos por idade agrupada',
-         subtitle = 'Registrados no Brasil em 2016',
-         caption = 'Fonte: SINASC 2016') +
-    # Retira título da legenda e posiciona no topo
-    theme(legend.title = element_blank(), legend.position = "top")
-  # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q05-partosIdadesAgrupadas')
-
-  #----- Gera outro gráfico do número de partos a partir das idades agrupadas---
-  # Geração do gráfico com o número de partos pela idade das mães
+  titulo <- 'Partos de acordo com idade agrupada'
   ggplot(parto) +
     # Gráfico tipo barras
     geom_bar(aes(x = IDADE_AGRUP_GRAF, fill = PARTO), position = 'fill') +
     # Escala de cor leve
     scale_fill_brewer() +
+    # Troca densidade por percentual
+    scale_y_continuous(labels = scales::percent) +
     # Nomes dos eixos, título e subtítulo
-    labs(x = 'Idade da Mãe', y = 'N° partos',
-         title = 'Número de partos por idade agrupada',
+    labs(x = 'Idade da mãe', y = NULL,
+         title = titulo,
          subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q05-partosIdadesAgrupadas')
+  grafico$gravaEmDisco(questao, titulo, altura = 7, largura = 20)
 
-
-  #----- Gera o gráfico do número de partos a partir da cor das mães----
+    #----- Gera o gráfico do número de partos a partir da cor das mães----
   # Geração do gráfico com o número de partos pela cor das mães
+  titulo <- 'Partos de acordo com a cor da mãe'
   ggplot(parto) +
     # Gráfico tipo barras
     geom_bar(aes(x = RACACORMAE, fill = PARTO), position = 'fill') +
     # Escala de cor leve
     scale_fill_brewer() +
+    # Troca densidade por percentual
+    scale_y_continuous(labels = scales::percent) +
     # Nomes dos eixos, título e subtítulo
-    labs(x = 'Cor da Mãe', y = 'N° partos',
+    labs(x = 'Cor da mãe', y = NULL,
          title = 'Número de partos pela cor da mãe',
          subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
   # Grava figura em disco para uso no Word (veja no diretório png)
-  grafico$gravaEmDisco('q05-partosCorMae')
-
+  grafico$gravaEmDisco(questao, titulo, altura = 7)
 
 
   #----- Geração das tabelas de contingência --------------------------------
-
 
   # Gerando tabela de contingência partos por idade
   tab_partos_idade <- table(parto$IDADE_AGRUP, parto$PARTO, exclude = 'Ignorado' )
@@ -216,28 +210,7 @@ resposta <- function(df) {
                round(prop.table(tab_partos_cor,1)*100, digits = 3))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #---- Cálculo dos coeficientes de contingencias ------------
+    #---- Cálculo dos coeficientes de contingencias ------------
 
   #Calcula o coeficiente de contingências - parto / idade
   #Criamos uma matriz associada à tabela de contingência
