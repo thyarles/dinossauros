@@ -19,6 +19,7 @@ export('resposta')
 resposta <- function(df) {
 
   grafico$msgB('Criando data frames para gerar tabelas e gráficos...')
+  questao <- 'q01'
 
   # Redefine dataframe com tipo de parto por Dia da Semana sem NAs
   df <- data.frame(wday(df$DTNASC[!is.na(df$PARTO)]),
@@ -82,7 +83,7 @@ resposta <- function(df) {
                                     include.lowest = TRUE)
 
   # g parto/dia ----
-  # Geração do gráfico com o número de partos por dia da semana
+  titulo <- 'Partos por tipo e dia da semana'
   ggplot(df, aes(x = DIA, fill = PARTO)) +
     # Gráfico tipo barras
     geom_bar(position="dodge", show.legend = FALSE) +
@@ -91,8 +92,8 @@ resposta <- function(df) {
     # Escala de cor leve
     scale_fill_brewer() +
     # Nomes dos eixos, título e subtítulo
-    labs(x = 'Dias da semana', y = 'N° partos',
-         title = 'Número de partos por tipo/dia da semana',
+    labs(x = '', y = 'Partos',
+         title = titulo,
          subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
@@ -101,27 +102,27 @@ resposta <- function(df) {
           strip.text.x = element_blank()
         )
     # Grava figura em disco para uso no Word (veja no diretório png)
-    grafico$gravaEmDisco('q01-partosDiaSemana')
+    grafico$gravaEmDisco(questao, titulo, largura = 10, altura = 6)
 
     # g parto/diau ----
-    # Geração do gráfico com o número de partos por dias úteis/fds
+    titulo <- 'Partos por tipo de dia'
     ggplot(df, aes(x = CDIA, fill = DIA)) +
       # Gráfico tipo barras
       geom_bar(position="stack") +
       # Escala de cor leve
       scale_fill_brewer() +
       # Nomes dos eixos, título e subtítulo
-      labs(x = '', y = 'N° partos',
-           title = 'Número de partos por tipo/dias úteis',
+      labs(x = '', y = 'Partos',
+           title = titulo,
            subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       # Retira título da legenda e posiciona no topo
       theme(legend.title = element_blank())
     # Grava figura em disco para uso no Word (veja no diretório png)
-    grafico$gravaEmDisco('q01-partosDiasUteis')
+    grafico$gravaEmDisco(questao, titulo, altura = 8, largura = 10)
 
     # g parto/hora ----
-    # Geração do gráfico com o número de partos por horas
+    titulo <- 'Partos por turno'
     ggplot(df[!is.na(df$GHORANASC), ], aes(x = GHORANASC, fill = PARTO)) +
       # Gráfico tipo barras
       geom_bar(position="dodge", show.legend = FALSE) +
@@ -130,8 +131,8 @@ resposta <- function(df) {
       # Escala de cor leve
       scale_fill_brewer() +
       # Nomes dos eixos, título e subtítulo
-      labs(x = 'Horário', y = 'N° partos',
-           title = 'Número de partos por hora do dia',
+      labs(x = 'Turno', y = 'Partos',
+           title = titulo,
            subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       # Retira título da legenda e posiciona no topo
@@ -140,20 +141,22 @@ resposta <- function(df) {
             strip.text.x = element_blank()
       )
     # Grava figura em disco para uso no Word (veja no diretório png)
-    grafico$gravaEmDisco('q01-partosHora')
+    grafico$gravaEmDisco(questao, titulo, altura = 6.5, largura = 10)
 
-    # g parto/t/i/e ----
-    # Geração do gráfico com o número de partos por horas
+    # g parto/t/i/d ----
+    titulo <- 'Partos por tipo, idade e dia'
     ggplot(df[!is.na(df$GIDADE), ],
       aes(x = DIA, fill = GIDADE)) +
       # Gráfico tipo barras
-      geom_bar(position="stack", na.rm = TRUE) +
+      geom_bar(position="fill", na.rm = TRUE) +
       facet_grid(PARTO~ .) +
       # Escala de cor leve
       scale_fill_brewer() +
+      # Troca densidade por percentual
+      scale_y_continuous(labels = scales::percent) +
       # Nomes dos eixos, título e subtítulo
-      labs(x = 'Dia da semana', y = 'N° partos',
-           title = 'Partos por tipo, idade e dia',
+      labs(x = '', y = 'Partos',
+           title = titulo,
            subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       # Retira título da legenda e posiciona no topo
@@ -162,9 +165,10 @@ resposta <- function(df) {
             strip.text.x = element_blank()
       )
     # Grava figura em disco para uso no Word (veja no diretório png)
-    grafico$gravaEmDisco('q01-partoTipoIdadeEstCiv')
+    grafico$gravaEmDisco(questao, titulo, altura = 9, largura = 14)
 
-    # g pxxx ----
+    # g parto/t/i/d/c ----
+    titulo <- 'Partos por tipo, idade, dia e estado civil'
     # Geração do gráfico com o número de partos por horas
     ggplot(df[df$ESTCIVMAE != 'Outros' & !is.na(df$GHORANASC), ],
            aes(x = DIA, fill = PARTO)) +
@@ -177,15 +181,15 @@ resposta <- function(df) {
       # Troca densidade por percentual
       scale_y_continuous(labels = scales::percent) +
       # Nomes dos eixos, título e subtítulo
-      labs(x = 'Dias da semana', y = '',
-           title = 'Partos por tipo, idade, dia da semana e estado civil',
+      labs(x = '', y = '',
+           title = titulo,
            subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       # Retira título da legenda e posiciona no topo
       theme(legend.title = element_blank(), legend.position = "top",
             strip.background = element_blank())
     # Grava figura em disco para uso no Word (veja no diretório png)
-    grafico$gravaEmDisco('q01-partoTipoIdadeSemanaCivil')
+    grafico$gravaEmDisco(questao, titulo, escala = 1, altura = 14, largura = 22)
 
     # Impressão das tabelas ----
     grafico$mTab('Q01', 'Parto por dia da semana',

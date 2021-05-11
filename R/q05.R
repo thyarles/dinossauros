@@ -215,4 +215,77 @@ resposta <- function(df) {
   grafico$mTab('Q05', 'Proporção de contigência de partos por cor',
                round(prop.table(tab_partos_cor,1)*100, digits = 3))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---- Cálculo dos coeficientes de contingencias ------------
+
+  #Calcula o coeficiente de contingências - parto / idade
+  #Criamos uma matriz associada à tabela de contingência
+  mat_partos_idade <- as.matrix(tab_partos_idade)
+
+
+  #Usamos a função chisq.test para obter o valor de qui-quadrado
+  # Com o valor de qui-quadrado, podemos obter o coeficiente de contingência
+  C_test <- (chisq.test(mat_partos_idade, correct = F))
+  X_Squared_parto_idade <- C_test$statistic
+  C_p_i = (X_Squared_parto_idade /(X_Squared_parto_idade + 2000))**(1/2)
+  print(C_p_i)
+  print(paste('C* para as variáveis tipo de parto e escolaridade é ',
+              as.character(C_p_i/((1/2)^(1/2)))))
+
+
+  #Calcula o coeficiente de contingências - parto / escolaridade
+  #Criamos uma matriz associada à tabela de contingência
+
+  mat_partos_esc <- as.matrix(tab_partos_escolaridade)
+
+  #Usamos a função chisq.test para obter o valor de qui-quadrado
+  # Com o valor de qui-quadrado, podemos obter o coeficiente de contingência
+  C_test <- (chisq.test(mat_partos_esc, correct = F))
+  X_Squared_parto_esc <- C_test$statistic
+  C_p_e = (X_Squared_parto_esc /(X_Squared_parto_esc + 2000))**(1/2)
+  print(C_p_e)
+  print(paste('C* para as variáveis tipo de parto e escolaridade é ',
+              as.character(C_p_e/((1/2)^(1/2)))))
+
+
+  #Calcula o coeficiente de contingências - parto / cor
+  #Criamos uma matriz associada à tabela de contingência
+
+  mat_partos_cor <- as.matrix(tab_partos_cor)
+
+  #Usamos a função chisq.test para obter o valor de qui-quadrado
+  # Com o valor de qui-quadrado, podemos obter o coeficiente de contingência
+  C_test <- (chisq.test(mat_partos_cor, correct = T))
+  X_Squared_parto_cor <- C_test$statistic
+  C_p_c = (X_Squared_parto_cor /(X_Squared_parto_cor + 2000))**(1/2)
+  print(C_p_c)
+  print(paste('C* para as variáveis tipo de parto e Raça é ',
+              as.character(C_p_c/((1/2)^(1/2)))))
+
+
+
 }
+
+
+
