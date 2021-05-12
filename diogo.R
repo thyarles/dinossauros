@@ -1,7 +1,7 @@
 library('ggplot2')
 library('cowplot')
 
-
+options(scipen = 999)
 #3)Descrever a variável peso do recém-nascidos da amostra.
 
 # Importes para a solução da questão
@@ -12,8 +12,8 @@ import('ggplot2')
 #Classificação da variável
 # ------------------------------------------------------------------------------
 
-#A variável "peso" é uma variável quantitativa contínua cujos valores pertencem
-#a um intervalo de números reais e que resultam de uma mensuração.
+# A variável "peso" é uma variável quantitativa contínua cujos valores pertencem
+# a um intervalo de números reais e que resultam de uma mensuração.
 
 # ------------------------------------------------------------------------------
 #Tabela de frequências
@@ -23,28 +23,32 @@ import('ggplot2')
 
 # Código original
 # tPeso <- table(AMOSTRA$PESO)
-tPeso <- table(round(AMOSTRA$PESO/1000, digits = 1))
+tPeso <- table(round(AMOSTRA$PESO, digits = 4))
+tPeso
 
 
-#Como pode ser observado na tabela(REF. da tabela), existem poucas observaçoes
-#iguais, isso deve-se ao fato da variável PESO ser contínua, e portanto para a
-#construção da tabela de frequências precisamos ter o cuidado de dividirmos por
-#classes(intervalos) da variável PESO.
+# Como pode ser observado na tabela(REF. da tabela), existem poucas observaçoes
+# iguais, isso deve-se ao fato da variável PESO ser contínua, e portanto para a
+# construção da tabela de frequências precisamos ter o cuidado de dividirmos por
+# classes(intervalos) da variável PESO.
 
-#Cálculo dos extremos para ajudar na escolha da quantidade de classe(intervalos)
-#e quais tamanhos de classes utilizaremos.
+# Cálculo dos extremos para ajudar na escolha da quantidade de classe(intervalos)
+# e quais tamanhos de classes utilizaremos.
 min(AMOSTRA$PESO)
 max(AMOSTRA$PESO)
+range(AMOSTRA$PESO)
 
-#Em Bussab, sugere-se a criação da tabela de frequências com uso de
-#5 a 15 intervalos com mesma amplitude. Neste caso, adotou-se 10 classes com
-#amplitude de 500, cada.
+
+# Em Bussab, sugere-se a criação da tabela de frequências com uso de
+# 5 a 15 intervalos com mesma amplitude. Neste caso, adotou-se 10 classes com
+# amplitude de 500, cada.
 
 #cut - para criar as faixas
-# tFreq <- table(cut(AMOSTRA$PESO, br=seq(0, 5000, 500)))
-tFreq <-cut_interval(round(AMOSTRA$PESO/1000, digits = 1), n = 7)
+tFreq <- table(cut(AMOSTRA$PESO, br=seq(250, 5000, 250)))
+#tFreq <-cut_interval(round(AMOSTRA$PESO, digits = 4), n = 19)
 tFreq
-
+table(tFreq)
+head(tFreq)
 # ------------------------------------------------------------------------------
 #Frequência RELATIVA
 # ------------------------------------------------------------------------------
@@ -103,7 +107,8 @@ tfreqRel
 hist(AMOSTRA$PESO, xlab = "Peso",
      ylab = "Frequência",
      main = "Peso dos bebês nascidos em hospitais - Brasil - 2016",
-     breaks = "Sturges",
+     #breaks = "Sturges",
+     breaks = 10,
      freq=FALSE,
      col="light blue" )
 #     ylim = c(0, 1000),
@@ -120,21 +125,21 @@ hist(AMOSTRA$PESO, xlab = "Peso",
 
 #MODELO 1
 ggplot(AMOSTRA) +
-  aes(x = round(PESO/1000, digits = 1), fill = '') +
+  aes(x = round(PESO, digits = 4), fill = '') +
   scale_fill_brewer() +
-  geom_histogram(bins = 7,
+  geom_histogram(bins = 19,
                  aes(y = ..density..),
                  show.legend = FALSE,
                  col = 'lightblue') +
-  labs(x = 'Massa (kg)', y = NULL,
+  labs(x = 'Peso (g)', y = NULL,
        title = 'Histograma do peso dos bebes nascidos em hospitais',
        subtitle = 'Registrados no Brasil em 2016',
        caption = 'Fonte: SINASC 2016') +
-  stat_function(fun = dnorm, args = c(mean = mean(round(AMOSTRA$PESO/1000, digits = 1)),
-                                      sd = sd(round(AMOSTRA$PESO/1000, digits = 1))))
+  stat_function(fun = dnorm, args = c(mean = mean(round(AMOSTRA$PESO, digits = 4)),
+                                      sd = sd(round(AMOSTRA$PESO, digits = 4))))
   grafico$gravaEmDisco('q03-histogramaPesoHopitais')
 
-# ------------------------------------------------------------------------------
+  # ------------------------------------------------------------------------------
 #RAMO-E-FOLHAS
 # ------------------------------------------------------------------------------
 stem(AMOSTRA$PESO, scale = 1)
@@ -198,7 +203,7 @@ quantile(AMOSTRA$PESO, probs = seq(0, 1, 0.1))
 #Percentil
 quantile(AMOSTRA$PESO, probs = seq(0, 1, 0.01))
 #Especificar
-quantile(AMOSTRA$PESO, probs = 0.1)
+quantile(AMOSTRA$PESO, probs = 0.9)
 
 # ------------------------------------------------------------------------------
 #MEDIDAS DE DISPERSÃO
@@ -323,25 +328,6 @@ boxplot(dados1$PESO,dados2$PESO,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # ------------------------------------------------------------------------------
 #DADOS A SEREM ANALISADOS
 # ------------------------------------------------------------------------------
@@ -444,7 +430,7 @@ ggplot(AMOSTRA) +
   aes(x = PESO) +
   geom_histogram(fill = 'lightblue',
                  col = 'black',
-                 bins = 10,
+                 bins = 20,
                  alpha = 0.3,
                  aes(y=..density..)) +
   labs(title = 'Peso dos bebês nascidos em hospitais - Brasil - 2016',
@@ -458,7 +444,7 @@ ggplot(AMOSTRA) +
   aes(x = PESO) +
   geom_histogram(fill = 'lightblue',
                  col = 'black',
-                 bins = 43,
+                 bins = 20,
                  alpha = 0.8,
                  aes(y=..density..)) +
   stat_function(fun = dnorm, args = c(mean = mean(AMOSTRA$PESO),
@@ -469,6 +455,192 @@ ggplot(AMOSTRA) +
              show.legend = T )+
   geom_vline(aes(xintercept=median(PESO,na.rm = T), color='mediana'),
              show.legend = T)
+
+
+
+
+
+
+
+
+
+
+# ------------------------------------------------------------------------------
+#Questão 4
+# ------------------------------------------------------------------------------
+#4) Existe relação entre o peso do recém-nascido e idade da mãe?
+#   A relação é forte?
+
+#Criando o dataframe apenas com idade da mãe e Peso
+df<-AMOSTRA[c('IDADEMAE', 'PESO', 'SEXO')]
+
+#Gráfico de dispersão PesoxIdadedaMae
+
+
+# plot(df$IDADEMAE, df$PESO,
+#      ylab="Peso", xlab="Idade da Mãe",
+#      col="lightblue",
+#      main="Dispersão")
+#
+plot(jitter(df$IDADEMAE), jitter(df$PESO),
+      ylab="Peso", xlab="Idade da Mãe",
+      col="lightblue",
+      main="Dispersão")
+#
+#
+# plot(df$PESO, df$IDADEMAE,
+#      xlab="Peso", ylab="Idade da Mãe",
+#      col="lightblue",
+#      main="Dispersão")
+#
+# plot(jitter(df$PESO), df$IDADEMAE,
+#      xlab="Peso", ylab="Idade da Mãe",
+#      col="lightblue",
+#      main="Dispersão")
+
+#jitter suaviza as sobreposições
+
+plot(jitter(df$PESO), jitter(df$IDADEMAE),
+     xlab="Peso", ylab="Idade da Mãe",
+     col="lightblue",
+     main="Dispersão")
+
+#Encontrar a correlação linear entre PesoXIdade
+
+ccor=cor(df$PESO,df$IDADEMAE)
+cat(ccor)
+
+#Grafico de dispersão no ggplot
+
+ggplot(df, aes(x=PESO, y=IDADEMAE))+
+  geom_point(aes(col=SEXO))
+
+
+
+ggplot(df, aes(y=PESO, x=IDADEMAE))+
+  geom_point(aes(col=SEXO))
+
+
+#comando para salvar em PNG
+grafico$gravaEmDisco("q04","Dispersão",altura = 5,largura = 20)
+
+
+
+
+
+#Hipótese: Existe relação entre o peso do recém-nascido e Escolaridade da mãe?
+#   A relação é forte?
+
+#Criando o dataframe apenas com idade da mãe e Peso
+df<-AMOSTRA[c('IDADEMAE', 'PESO', 'SEXO' ,'ESCMAE')]
+
+#Dados utilizados no relatório
+
+df1<-AMOSTRA[AMOSTRA$PESO > 4319.7,]
+length(df1$PESO)
+df2<-AMOSTRA[AMOSTRA$PESO < 2095.3,]
+length(df2$PESO)
+df3<-AMOSTRA[AMOSTRA$PESO > 4524.0,]
+length(df3$PESO)
+
+#Gráfico de dispersão PesoxESCMAE
+
+# Geração do gráfico com o peso do recém-nascido pela escolaridade da mãe.
+ggplot(df) +
+  # Gráfico tipo barras
+  geom_bar(aes(x = ESCMAE, fill = PESO), position = 'fill') +
+  # Escala de cor leve
+  scale_fill_brewer() +
+  # Nomes dos eixos, título e subtítulo
+  labs(x = 'Escolaridade da Mãe', y = 'Peso',
+       title = 'Peso dos nascituros pela escolaridade da mãe',
+       subtitle = 'Registrados no Brasil em 2016',
+       caption = 'Fonte: SINASC 2016') +
+  # Retira título da legenda e posiciona no topo
+  theme(legend.title = element_blank(), legend.position = "top")
+# Grava figura em disco para uso no Word (veja no diretório png)
+grafico$gravaEmDisco('q05-partosPorEscolaridade')
+
+
+# Tabela de contigência partos por escolaridade
+tab_partos_escolaridade <- table(parto$ESCMAE,parto$PARTO, exclude = 'Ignorado')
+grafico$mTab('Q05', 'Contigência de partos por escolaridade',
+             tab_partos_escolaridade)
+
+grafico$mTab('Q05', 'Proporção dos partos por idade proporcional',
+             round(prop.table(tab_partos_escolaridade,1)*100, digits = 3))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# plot(df$IDADEMAE, df$PESO,
+#      ylab="Peso", xlab="Idade da Mãe",
+#      col="lightblue",
+#      main="Dispersão")
+#
+plot(jitter(df$ESCMAE), jitter(df$PESO),
+     ylab="Peso", xlab="Escolaridade da Mãe",
+     col="lightblue",
+     main="Dispersão")
+#
+#
+# plot(df$PESO, df$IDADEMAE,
+#      xlab="Peso", ylab="Idade da Mãe",
+#      col="lightblue",
+#      main="Dispersão")
+#
+# plot(jitter(df$PESO), df$IDADEMAE,
+#      xlab="Peso", ylab="Idade da Mãe",
+#      col="lightblue",
+#      main="Dispersão")
+
+#jitter suaviza as sobreposições
+
+plot(jitter(df$PESO), jitter(df$IDADEMAE),
+     xlab="Peso", ylab="Idade da Mãe",
+     col="lightblue",
+     main="Dispersão")
+
+#Encontrar a correlação linear entre PesoXIdade
+
+ccor=cor(df$PESO,df$IDADEMAE)
+cat(ccor)
+
+#Grafico de dispersão no ggplot
+
+ggplot(df, aes(x=PESO, y=IDADEMAE))+
+  geom_point(aes(col=SEXO))
+
+
+
+ggplot(df, aes(y=PESO, x=IDADEMAE))+
+  geom_point(aes(col=SEXO))
+
+
+#comando para salvar em PNG
+grafico$gravaEmDisco("q04","Dispersão",altura = 5,largura = 20)
+
+
 
 
 
