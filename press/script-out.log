@@ -161,24 +161,34 @@
    --> Menor peso...: 365 gramas
    --> Maior peso...: 4800 gramas
    --> Faixas
-    (0,500]  (500,1000] (1000,1500] (1500,2000] (2000,2500] (2500,3000] 
-          2          13          17          36         109         454 
-(3000,3500] (3500,4000] (4000,4500] (4500,5000] 
-        849         432          80           8 
+  (250,500]   (500,750]  (750,1000] (1000,1250] (1250,1500] (1500,1750] 
+          2           6           7           5          12          14 
+(1750,2000] (2000,2250] (2250,2500] (2500,2750] (2750,3000] (3000,3250] 
+         22          39          70         160         294         454 
+(3250,3500] (3500,3750] (3750,4000] (4000,4250] (4250,4500] (4500,4750] 
+        395         289         143          62          18           7 
+(4750,5000] 
+          1 
 
-   --> Número de classes para a variável PESO: 10
+   --> Número de classes para a variável PESO: 19
    --> Frequência relativatFreq
-  2   8  13  17  36  80 109 432 454 849 
-0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 
+         1          2          5          6          7         12         14 
+0.05263158 0.05263158 0.05263158 0.05263158 0.10526316 0.05263158 0.05263158 
+        18         22         39         62         70        143        160 
+0.05263158 0.05263158 0.05263158 0.05263158 0.05263158 0.05263158 0.05263158 
+       289        294        395        454 
+0.05263158 0.05263158 0.05263158 0.05263158 
 
    --> Salvando gráfico Histograma do peso dos nascidos em hospitais no diretório png/q03 ...
    --> Medidas de posição central - MÉDIA dos pesos: 3173.9125
    --> Medidas de posição central - MEDIANA dos pesos: 3207.5
    --> Medidas de posição central - MODA dos pesos: 3100
-   --> Quartil dos pesos     0%     25%     50%     75%    100% 
+   --> Quartil dos pesos
+     0%     25%     50%     75%    100% 
  365.00 2910.00 3207.50 3516.25 4800.00 
 
-   --> Decil dos pesos    0%    10%    20%    30%    40%    50%    60%    70%    80%    90%   100% 
+   --> Decil dos pesos
+    0%    10%    20%    30%    40%    50%    60%    70%    80%    90%   100% 
  365.0 2554.5 2835.0 2985.0 3100.0 3207.5 3330.0 3455.0 3600.0 3800.0 4800.0 
 
    --> Amplitude do peso: 4435
@@ -189,8 +199,18 @@
    --> Aplitude interquartílica: 606.25
    --> Salvando gráfico Peso dos recém-nascidos em hospitais no diretório png/q03 ...
 
- # Gerando dados para a QUESTÃO 04...NULL
-
+ # Gerando dados para a QUESTÃO 04...
+   --> Produzindo gráficos para responder à questão...
+   --> Salvando gráfico Tipos de partos e peso no diretório png/q04 ...
+   --> Salvando gráfico Escolaridade da mãe e peso no diretório png/q04 ...
+   --> Salvando gráfico Idade da mãe e peso no diretório png/q04 ...
+   --> Salvando gráfico Hora de nascimento e peso no diretório png/q04 ...
+   --> Salvando gráfico Estado civil e peso no diretório png/q04 ...
+   --> Salvando gráfico Dia e peso no diretório png/q04 ...
+   --> Salvando gráfico Tipo dia e peso no diretório png/q04 ...
+   --> Salvando gráfico Tempo de gestação e peso no diretório png/q04 ...
+   --> Salvando gráfico Tipo de gravidez e peso no diretório png/q04 ...
+   --> Salvando gráfico Cor e peso no diretório png/q04 ...
 
  # Gerando dados para a QUESTÃO 05...
    --> Os partos cirúrgicos representam 55.414 % dos partos no Brasil
@@ -276,11 +296,11 @@
   Sum      213.090 286.910 500.000
  -----------------------------------------------------------------
    --> CPI: 0.203520174954769
-   --> C* para as variáveis tipo de parto e escolaridade: 0.287820991637579
+   --> C* para as variáveis tipo de parto e idade: 0.287820991637579
    --> CPE: 0.236710726363532
    --> C* para as variáveis tipo de parto e escolaridade: 0.334759519582493
    --> CPC: 0.161934320599145
    --> C* para as variáveis tipo de parto e Raça: 0.229009712404984
-   
+
  ### Script executado com sucesso!
 

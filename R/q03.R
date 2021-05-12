@@ -99,10 +99,10 @@ resposta <- function(df) {
 
   # medidas separatrizes ----
   # Quartil
-  grafico$msgB('Quartil dos pesos')
+  grafico$msgB('Quartil dos pesos\n')
   print(quantile(df$PESO))
   # Decil
-  grafico$msgB('Decil dos pesos')
+  grafico$msgB('Decil dos pesos\n')
   print(quantile(df$PESO, probs = seq(0, 1, 0.1)))
   # Percentil
   # grafico$msgB('Percentil dos pesos')
