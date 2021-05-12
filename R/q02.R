@@ -21,7 +21,7 @@ export('resposta')
 resposta <- function(df) {
 
   # Define questão para salvar gráficos na pasta certa
-  questao <- 'Q02'
+  questao <- 'q02'
 
   # Cria novo atributo sem fatores
   df$ECA <- as.integer(AMOSTRA$ESTCIVMAE)
@@ -45,7 +45,7 @@ resposta <- function(df) {
                       right=FALSE)
 
   # Plota gráfico
-  titulo <- 'Percentual estado civil das mães'
+  titulo <- 'Percentual das mães por estado civil'
   ggplot(df, aes(x = ECA, fill='')) +
     # Aplica percentual calculado via GGPLOT
     geom_bar(aes(y = (..count..)/sum(..count..)), show.legend = FALSE) +
@@ -54,19 +54,18 @@ resposta <- function(df) {
     # Troca densidade numérica pelo percentual
     scale_y_continuous(labels = scales::percent) +
     # Nomes dos eixos, título e subtítulo
-    labs(x = 'Estado civil', y = NULL,
+    labs(x = NULL, y = NULL,
                title = titulo,
                subtitle = 'Registrados no Brasil em 2016',
                caption = 'Fonte: SINASC 2016')
     # Grava figura em disco para uso no Word (veja no diretório png)
-    grafico <- modules::use('R/grafico.R')
-    grafico$gravaEmDisco(questao, titulo)
+    grafico$gravaEmDisco(questao, titulo, altura = 6, largura = 10)
 
     # Plota gráfico
     titulo <- 'Percentual do estado civil das mães por faixa etária'
     ggplot(df, aes(x = FAIXA, fill=ECA)) +
       # Aplica percentual calculado via GGPLOT
-      geom_bar(aes(y = (..count..)/sum(..count..))) +
+      geom_bar(position = 'fill', aes(y = (..count..)/sum(..count..))) +
       # Aplica o tema de cores
       scale_fill_brewer() +
       # Adiciona percentual para ficar "humanizado"
@@ -77,7 +76,7 @@ resposta <- function(df) {
            subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       theme(legend.title = element_blank(), legend.position = "top")
-      grafico$gravaEmDisco(questao, titulo)
+      grafico$gravaEmDisco(questao, titulo, altura = 10)
 }
 
 
