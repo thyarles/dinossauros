@@ -70,7 +70,7 @@ resposta <- function(df) {
     # Nomes dos eixos, título e subtítulo
     labs(x = 'Escolaridade da mãe', y = NULL,
          title = titulo,
-         # subtitle = 'Registrados no Brasil em 2016',
+         subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
@@ -91,7 +91,7 @@ resposta <- function(df) {
     # Nomes dos eixos, título e subtítulo
     labs(x = 'Idade da Mãe', y = NULL,
          title = titulo,
-         # subtitle = 'Registrados no Brasil em 2016',
+         subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
@@ -126,7 +126,7 @@ resposta <- function(df) {
     # Nomes dos eixos, título e subtítulo
     labs(x = 'Idade da Mãe', y = 'Proporção de partos',
          title = 'Tipos de parto pela idade da mãe',
-         # subtitle = 'Registrados no Brasil em 2016',
+         subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
      #Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
@@ -147,7 +147,7 @@ resposta <- function(df) {
     # Nomes dos eixos, título e subtítulo
     labs(x = 'Idade da mãe', y = NULL,
          title = titulo,
-         # subtitle = 'Registrados no Brasil em 2016',
+         subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")
@@ -167,7 +167,7 @@ resposta <- function(df) {
     # Nomes dos eixos, título e subtítulo
     labs(x = 'Cor da mãe', y = NULL,
          title = 'Número de partos pela cor da mãe',
-         # subtitle = 'Registrados no Brasil em 2016',
+         subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top")

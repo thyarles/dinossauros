@@ -67,7 +67,7 @@ resposta <- function(df) {
                    col = 'lightblue') +
     labs(x = 'Massa (gramas)', y = 'Densidade',
          title = titulo,
-         # subtitle = 'Registrados no Brasil em 2016',
+         subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     stat_function(fun = dnorm, args = c(mean = mean(df$PESO),
                                         sd = sd(df$PESO)))
@@ -150,7 +150,7 @@ resposta <- function(df) {
     # Nomes dos eixos, título e subtítulo
     labs(x = '', y = '',
          title = titulo,
-         # subtitle = 'Registrados no Brasil em 2016',
+         subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top",

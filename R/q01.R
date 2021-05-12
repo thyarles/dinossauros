@@ -94,7 +94,7 @@ resposta <- function(df) {
     # Nomes dos eixos, título e subtítulo
     labs(x = '', y = 'Partos',
          title = titulo,
-         # subtitle = 'Registrados no Brasil em 2016',
+         subtitle = 'Registrados no Brasil em 2016',
          caption = 'Fonte: SINASC 2016') +
     # Retira título da legenda e posiciona no topo
     theme(legend.title = element_blank(), legend.position = "top",
@@ -114,7 +114,7 @@ resposta <- function(df) {
       # Nomes dos eixos, título e subtítulo
       labs(x = '', y = 'Partos',
            title = titulo,
-           # subtitle = 'Registrados no Brasil em 2016',
+           subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       # Retira título da legenda e posiciona no topo
       theme(legend.title = element_blank())
@@ -133,7 +133,7 @@ resposta <- function(df) {
       # Nomes dos eixos, título e subtítulo
       labs(x = 'Turno', y = 'Partos',
            title = titulo,
-           # subtitle = 'Registrados no Brasil em 2016',
+           subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       # Retira título da legenda e posiciona no topo
       theme(legend.title = element_blank(), legend.position = "top",
@@ -157,7 +157,7 @@ resposta <- function(df) {
       # Nomes dos eixos, título e subtítulo
       labs(x = '', y = 'Partos',
            title = titulo,
-           # subtitle = 'Registrados no Brasil em 2016',
+           subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       # Retira título da legenda e posiciona no topo
       theme(legend.title = element_blank(), legend.position = "top",
@@ -183,7 +183,7 @@ resposta <- function(df) {
       # Nomes dos eixos, título e subtítulo
       labs(x = '', y = '',
            title = titulo,
-           # subtitle = 'Registrados no Brasil em 2016',
+           subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       # Retira título da legenda e posiciona no topo
       theme(legend.title = element_blank(), legend.position = "top",
@@ -207,6 +207,4 @@ resposta <- function(df) {
     grafico$mTab('Q01', 'Parto por Escolariadade da mãe',
                  table(df$ESCMAE, df$PARTO, exclude = 'Ignorado', useNA = NULL))
 
-    # Devolve saída para usar os agrupamentos em outras questões
-    return(df)
 }
