@@ -221,7 +221,7 @@ resposta <- function(df) {
   X_Squared_parto_idade <- C_test$statistic
   C_p_i = (X_Squared_parto_idade /(X_Squared_parto_idade + 2000))**(1/2)
   grafico$msgB(paste('CPI:', C_p_i))
-  grafico$msgB(paste('C* para as variáveis tipo de parto e escolaridade:',
+  grafico$msgB(paste('C* para as variáveis tipo de parto e idade:',
               as.character(C_p_i/((1/2)^(1/2)))))
 
   #Calcula o coeficiente de contingências - parto / escolaridade
