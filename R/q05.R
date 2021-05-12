@@ -54,7 +54,7 @@ resposta <- function(df) {
 
 
   proporcao_partos = round(length(parto[parto$PARTO != "Vaginal",5]) / length(parto$PARTO),5)
-  print(paste("Os partos cirúrgicos representam",
+  grafico$msgB(paste("Os partos cirúrgicos representam",
               as.character((proporcao_partos*100)),
               "% dos partos no Brasil"))
 
