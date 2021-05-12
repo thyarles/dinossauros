@@ -26,7 +26,8 @@ resposta <- function(df) {
   grafico$msgB(paste('Maior peso...:', maxPeso))
 
   # Faixas ----
-  tFreq <- table(cut(df$PESO, br=seq(0, 5000, 500), dig.lab = 4))
+ # tFreq <- table(cut(df$PESO, br=seq(0, 5000, 500), dig.lab = 4))
+  tFreq <- table(cut(df$PESO, br=seq(250, 5000, 250), dig.lab = 4))
   grafico$msgB('Faixas')
   print(tFreq)
 
@@ -46,7 +47,7 @@ resposta <- function(df) {
   # 2^10=1024
   # 2^11=2048
 
-  k <- 10
+  k <- 19
   grafico$msgB(paste('Número de classes para a variável PESO:', k))
 
   # Gerando e nomeando os intervalos de classes
@@ -60,7 +61,7 @@ resposta <- function(df) {
     aes(x = PESO, fill = '') +
     scale_fill_brewer() +
     scale_y_continuous(labels = NULL) +
-    geom_histogram(bins = 7,
+    geom_histogram(bins = 19,
                    aes(y = ..density..),
                    show.legend = FALSE,
                    col = 'lightblue') +
