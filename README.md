@@ -1,4 +1,4 @@
-# dinossauros
+# SINASC 2016
 
     [1] "Carregando e/ou instalando bibliotecas necessárias..."
 
