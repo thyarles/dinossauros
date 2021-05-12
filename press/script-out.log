@@ -79,11 +79,11 @@
 
  # Gerando dados para a QUESTÃO 01...
    --> Criando data frames para gerar tabelas e gráficos...
-   --> Salvando gráfico em ./png/q01-partosDiaSemana.png
-   --> Salvando gráfico em ./png/q01-partosDiasUteis.png
-   --> Salvando gráfico em ./png/q01-partosHora.png
-   --> Salvando gráfico em ./png/q01-partoTipoIdadeEstCiv.png
-   --> Salvando gráfico em ./png/q01-partoTipoIdadeSemanaCivil.png
+   --> Salvando gráfico Partos por tipo e dia da semana no diretório png/q01 ...
+   --> Salvando gráfico Partos por tipo de dia no diretório png/q01 ...
+   --> Salvando gráfico Partos por turno no diretório png/q01 ...
+   --> Salvando gráfico Partos por tipo, idade e dia no diretório png/q01 ...
+   --> Salvando gráfico Partos por tipo, idade, dia e estado civil no diretório png/q01 ...
  ----> Tabela: Q01 - Parto por dia da semana
  -----------------------------------------------------------------      
        Vaginal Cesáreo  Sum
@@ -152,53 +152,88 @@
   Sum             886    1087 1973
  -----------------------------------------------------------------
 
- # Gerando dados para a QUESTÃO 02...NULL
+ # Gerando dados para a QUESTÃO 02...
+   --> Salvando gráfico Percentual das mães por estado civil no diretório png/q02 ...
+   --> Salvando gráfico Percentual do estado civil das mães por faixa etária no diretório png/q02 ...
 
+ # Gerando dados para a QUESTÃO 03...
+   --> Freq máxima..: 1.05%
+   --> Menor peso...: 365 gramas
+   --> Maior peso...: 4800 gramas
+   --> Faixas
+    (0,500]  (500,1000] (1000,1500] (1500,2000] (2000,2500] (2500,3000] 
+          2          13          17          36         109         454 
+(3000,3500] (3500,4000] (4000,4500] (4500,5000] 
+        849         432          80           8 
 
- # Gerando dados para a QUESTÃO 03...NULL
+   --> Número de classes para a variável PESO: 10
+   --> Frequência relativatFreq
+  2   8  13  17  36  80 109 432 454 849 
+0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 
 
+   --> Salvando gráfico Histograma do peso dos nascidos em hospitais no diretório png/q03 ...
+   --> Medidas de posição central - MÉDIA dos pesos: 3173.9125
+   --> Medidas de posição central - MEDIANA dos pesos: 3207.5
+   --> Medidas de posição central - MODA dos pesos: 3100
+   --> Quartil dos pesos     0%     25%     50%     75%    100% 
+ 365.00 2910.00 3207.50 3516.25 4800.00 
+
+   --> Decil dos pesos    0%    10%    20%    30%    40%    50%    60%    70%    80%    90%   100% 
+ 365.0 2554.5 2835.0 2985.0 3100.0 3207.5 3330.0 3455.0 3600.0 3800.0 4800.0 
+
+   --> Amplitude do peso: 4435
+   --> Desvio médio do peso: 403.66
+   --> Desvio padrão do peso: 556.09
+   --> Variãncia do peso: 309237.5
+   --> Coeficiente de variação do peso: 0.18
+   --> Aplitude interquartílica: 606.25
+   --> Salvando gráfico Peso dos recém-nascidos em hospitais no diretório png/q03 ...
 
  # Gerando dados para a QUESTÃO 04...NULL
 
 
  # Gerando dados para a QUESTÃO 05...
-   --> Salvando gráfico em ./png/q05-partosPorEscolaridade.png
-   --> Salvando gráfico em ./png/q05-partosPorIdade.png
-   --> Salvando gráfico em ./png/q05-partosPontosIdadeMae.png
-   --> Salvando gráfico em ./png/q05-partosIdadesAgrupadas.png
-   --> Salvando gráfico em ./png/q05-partosCorMae.png
+   --> Os partos cirúrgicos representam 55.414 % dos partos no Brasil
+   --> Salvando gráfico Partos de acordo com a escolaridade da mãe no diretório png/q05 ...
+   --> Salvando gráfico Partos de acordo com a idade da mãe no diretório png/q05 ...
+   --> Salvando gráfico Tipos de parto pela idade da mãe no diretório png/q05 ...
+   --> Salvando gráfico Partos de acordo com idade agrupada no diretório png/q05 ...
+   --> Salvando gráfico Partos de acordo com a cor da mãe no diretório png/q05 ...
  ----> Tabela: Q05 - Contigência Partos por Idade
  -----------------------------------------------------------------          
            Vaginal Cesáreo  Sum
-  00 |- 20     222     136  358
-  20 |- 25     241     243  484
-  25 |- 30     171     238  409
-  30 |- 35     129     243  372
-  35 |- 40      76     150  226
-  40 |-          8      40   48
-  Sum          847    1050 1897
+  13 |- 18     118      58  176
+  18 |- 23     240     220  460
+  23 |- 28     211     245  456
+  28 |- 33     137     235  372
+  33 |- 38     105     209  314
+  38 |- 43      28      67   95
+  43 |-          1      10   11
+  Sum          840    1044 1884
  -----------------------------------------------------------------
  ----> Tabela: Q05 - Proporção das idades das mães
  -----------------------------------------------------------------          
            Vaginal Cesáreo     Sum
-  00 |- 20  26.210  12.952  39.162
-  20 |- 25  28.453  23.143  51.596
-  25 |- 30  20.189  22.667  42.856
-  30 |- 35  15.230  23.143  38.373
-  35 |- 40   8.973  14.286  23.259
-  40 |-      0.945   3.810   4.755
+  13 |- 18  14.048   5.556  19.604
+  18 |- 23  28.571  21.073  49.644
+  23 |- 28  25.119  23.467  48.586
+  28 |- 33  16.310  22.510  38.820
+  33 |- 38  12.500  20.019  32.519
+  38 |- 43   3.333   6.418   9.751
+  43 |-      0.119   0.958   1.077
   Sum      100.000 100.001 200.001
  -----------------------------------------------------------------
  ----> Tabela: Q05 - Proporção dos partos por idade
  -----------------------------------------------------------------          
            Vaginal Cesáreo     Sum
-  00 |- 20  62.011  37.989 100.000
-  20 |- 25  49.793  50.207 100.000
-  25 |- 30  41.809  58.191 100.000
-  30 |- 35  34.677  65.323 100.000
-  35 |- 40  33.628  66.372 100.000
-  40 |-     16.667  83.333 100.000
-  Sum      238.585 361.415 600.000
+  13 |- 18  67.045  32.955 100.000
+  18 |- 23  52.174  47.826 100.000
+  23 |- 28  46.272  53.728 100.000
+  28 |- 33  36.828  63.172 100.000
+  33 |- 38  33.439  66.561 100.000
+  38 |- 43  29.474  70.526 100.000
+  43 |-      9.091  90.909 100.000
+  Sum      274.323 425.677 700.000
  -----------------------------------------------------------------
  ----> Tabela: Q05 - Contigência de partos por escolaridade
  -----------------------------------------------------------------             
@@ -223,22 +258,29 @@
  ----> Tabela: Q05 - Contigência de partos por cor
  -----------------------------------------------------------------          
            Vaginal Cesáreo  Sum
-  Branca       235     463  698
+  Branca       235     461  696
   Preta         53      54  107
   Amarela        2       5    7
-  Parda        552     523 1075
+  Parda        545     519 1064
   Indígena       5       5   10
-  Sum          847    1050 1897
+  Sum          840    1044 1884
  -----------------------------------------------------------------
  ----> Tabela: Q05 - Proporção de contigência de partos por cor
  -----------------------------------------------------------------          
            Vaginal Cesáreo     Sum
-  Branca    33.668  66.332 100.000
+  Branca    33.764  66.236 100.000
   Preta     49.533  50.467 100.000
   Amarela   28.571  71.429 100.000
-  Parda     51.349  48.651 100.000
+  Parda     51.222  48.778 100.000
   Indígena  50.000  50.000 100.000
-  Sum      213.121 286.879 500.000
+  Sum      213.090 286.910 500.000
  -----------------------------------------------------------------
+   --> CPI: 0.203520174954769
+   --> C* para as variáveis tipo de parto e escolaridade: 0.287820991637579
+   --> CPE: 0.236710726363532
+   --> C* para as variáveis tipo de parto e escolaridade: 0.334759519582493
+   --> CPC: 0.161934320599145
+   --> C* para as variáveis tipo de parto e Raça: 0.229009712404984
+   
  ### Script executado com sucesso!
 

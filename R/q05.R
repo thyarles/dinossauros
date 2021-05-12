@@ -8,13 +8,10 @@
 # Importes para a solução da questão
 grafico <- modules::use('R/grafico.R')
 
-suppressMessages(
-  suppressWarnings(
-    suppressPackageStartupMessages(
-      import('ggplot2')
-    )
-  )
-)
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+  import('ggplot2'))))
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+  import('stats'))))
 
 # Exporta função
 export('resposta')
@@ -57,7 +54,7 @@ resposta <- function(df) {
 
 
   proporcao_partos = round(length(parto[parto$PARTO != "Vaginal",5]) / length(parto$PARTO),5)
-  print(paste("Os partos cirúrgicos representam",
+  grafico$msgB(paste("Os partos cirúrgicos representam",
               as.character((proporcao_partos*100)),
               "% dos partos no Brasil"))
 
@@ -215,6 +212,7 @@ resposta <- function(df) {
   #Calcula o coeficiente de contingências - parto / idade
   #Criamos uma matriz associada à tabela de contingência
   mat_partos_idade <- as.matrix(tab_partos_idade)
+  #grafico$msgB(paste('Coeficiente de contigências parto/idade:', mat_partos_idade))
 
 
   #Usamos a função chisq.test para obter o valor de qui-quadrado
@@ -222,10 +220,9 @@ resposta <- function(df) {
   C_test <- (chisq.test(mat_partos_idade, correct = F))
   X_Squared_parto_idade <- C_test$statistic
   C_p_i = (X_Squared_parto_idade /(X_Squared_parto_idade + 2000))**(1/2)
-  print(C_p_i)
-  print(paste('C* para as variáveis tipo de parto e escolaridade é ',
+  grafico$msgB(paste('CPI:', C_p_i))
+  grafico$msgB(paste('C* para as variáveis tipo de parto e escolaridade:',
               as.character(C_p_i/((1/2)^(1/2)))))
-
 
   #Calcula o coeficiente de contingências - parto / escolaridade
   #Criamos uma matriz associada à tabela de contingência
@@ -237,8 +234,8 @@ resposta <- function(df) {
   C_test <- (chisq.test(mat_partos_esc, correct = F))
   X_Squared_parto_esc <- C_test$statistic
   C_p_e = (X_Squared_parto_esc /(X_Squared_parto_esc + 2000))**(1/2)
-  print(C_p_e)
-  print(paste('C* para as variáveis tipo de parto e escolaridade é ',
+  grafico$msgB(paste('CPE:', C_p_e))
+  grafico$msgB(paste('C* para as variáveis tipo de parto e escolaridade:',
               as.character(C_p_e/((1/2)^(1/2)))))
 
 
@@ -252,11 +249,9 @@ resposta <- function(df) {
   C_test <- (chisq.test(mat_partos_cor, correct = T))
   X_Squared_parto_cor <- C_test$statistic
   C_p_c = (X_Squared_parto_cor /(X_Squared_parto_cor + 2000))**(1/2)
-  print(C_p_c)
-  print(paste('C* para as variáveis tipo de parto e Raça é ',
+  grafico$msgB(paste('CPC:', C_p_c))
+  grafico$msgB(paste('C* para as variáveis tipo de parto e Raça:',
               as.character(C_p_c/((1/2)^(1/2)))))
-
-
 
 }
 

@@ -4,18 +4,11 @@
 
 # Importes para a solução da questão
 grafico <- modules::use('R/grafico.R')
-suppressMessages(
-  suppressWarnings(
-    suppressPackageStartupMessages(
-      import('ggplot2')
-    )
-  )
-)
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+      import('ggplot2'))))
 
 # Exporta função
 export('resposta')
-
-
 
 # Define função de resposta (rode df <- AMOSTRA para testar local)
 resposta <- function(df) {
@@ -24,7 +17,7 @@ resposta <- function(df) {
   questao <- 'q02'
 
   # Cria novo atributo sem fatores
-  df$ECA <- as.integer(AMOSTRA$ESTCIVMAE)
+  df$ECA <- as.integer(df$ESTCIVMAE)
 
   # Unindo Viúva, Divorciada, Ignorado (Estado Civil Agrupado = ECA) no cód. 99
   df$ECA[df$ECA %in% c(3, 4, 6)] <- 99
