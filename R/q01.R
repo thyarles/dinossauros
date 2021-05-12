@@ -207,4 +207,6 @@ resposta <- function(df) {
     grafico$mTab('Q01', 'Parto por Escolariadade da mãe',
                  table(df$ESCMAE, df$PARTO, exclude = 'Ignorado', useNA = NULL))
 
+    # Devolve saída para usar os agrupamentos em outras questões
+    return(df)
 }

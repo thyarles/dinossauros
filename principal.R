@@ -22,17 +22,11 @@
   sinasc <- modules::use('R')
 
 # Carrega pacotes globais para plotagem de gráficos com supressão de mensagens
-  suppressMessages(
-    suppressWarnings(
-      suppressPackageStartupMessages(
-        library('ggplot2')
-      )
-    )
-  )
+  suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+    library('ggplot2'))))
 
 # tab aux-----------------------------------------------------------------------
 # Leitura das tabelas auxiliares
-  # Limpa console para facilitar visualização da saída
   cat('\014', '\n ### Início da execução.\n',
       '-----------------------------------------------------------------')
   sinasc$grafico$msgA('Carregando tabelas auxiliares')
@@ -115,8 +109,7 @@
 # 1. Pode-se dizer que o número de partos varia entre os dias da semana?
 #    Por que?
   sinasc$grafico$msgA('Gerando dados para a QUESTÃO 01')
-  sinasc <- modules::use('R')
-  sinasc$q01$resposta(AMOSTRA)
+  Q01 <- sinasc$q01$resposta(AMOSTRA) # Salva Q01 para uso na questao 4
 
 # questao2----------------------------------------------------------------------
 # 2. Qual é o percentual de mães solteiras?
@@ -133,7 +126,7 @@
 # 4. Existe relação entre o peso do recém-nascido e idade da mãe?
 #    A relação é forte?
   sinasc$grafico$msgA('Gerando dados para a QUESTÃO 04')
-  sinasc$q04$resposta(AMOSTRA)
+  sinasc$q04$resposta(AMOSTRA, Q01)
 
 # qiestao5----------------------------------------------------------------------
 # 5. Pode-se dizer que o tipo de parto está relacionado a seguintes variáveis?
@@ -146,4 +139,4 @@
 
 # final----------------------------------------------------------------------
 # Mensagem de sucesso
-  cat('\n ### Script executado com sucesso!\n\n')
+  cat('\n\n ### Script executado com sucesso!\n\n')
