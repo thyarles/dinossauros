@@ -5,7 +5,9 @@
 # Importes para a solução da questão
 grafico <- modules::use('R/grafico.R')
 suppressMessages(suppressWarnings(suppressPackageStartupMessages(
-      import('ggplot2'))))
+  import('ggplot2'))))
+suppressMessages(suppressWarnings(suppressPackageStartupMessages(
+  import('stats'))))
 
 # Exporta função
 export('resposta')
@@ -71,21 +73,22 @@ resposta <- function(df) {
            caption = 'Fonte: SINASC 2016') +
       theme(legend.title = element_blank(), legend.position = "top")
       grafico$gravaEmDisco(questao, titulo, altura = 10)
+
+  # gerando tabela para cálculo da correlação de contingência
+  tab=table(df$FAIXA, df$ECA)
+
+  #definindo como matriz
+  tabmax=as.matrix(tab)
+
+
+  #Usamos a função chisq.test para obter o valor de qui-quadrado
+  # Com o valor de qui-quadrado, podemos obter o coeficiente de contingência
+  C_test <- (chisq.test(tabmax, correct = F))
+  X_Squared_eca <- C_test$statistic
+  C_p_i = (X_Squared_eca /(X_Squared_eca + 2000))**(1/2)
+
+  grafico$msgB(paste('CPI:', C_p_i))
+  grafico$msgB(paste('C* para as variáveis estado civil e idade:',
+                     as.character(C_p_i/((1/2)^(1/2)))))
+
 }
-
-# gerando tabela para cálculo da correlação de contingência
-tab=table(df$FAIXA, df$ECA)
-
-#definindo como matriz
-tabmax=as.matrix(tab)
-
-
-#Usamos a função chisq.test para obter o valor de qui-quadrado
-# Com o valor de qui-quadrado, podemos obter o coeficiente de contingência
-C_test <- (chisq.test(tabmax, correct = F))
-X_Squared_eca <- C_test$statistic
-C_p_i = (X_Squared_eca /(X_Squared_eca + 2000))**(1/2)
-
-grafico$msgB(paste('CPI:', C_p_i))
-grafico$msgB(paste('C* para as variáveis estado civil e idade:',
-                   as.character(C_p_i/((1/2)^(1/2)))))
