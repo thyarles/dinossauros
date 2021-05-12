@@ -32,9 +32,9 @@ resposta <- function(df) {
                                                                'Outros'))
   # Cria faixas de idade
   df$FAIXA <- cut(df$IDADEMAE,
-                      breaks=c(13,20, 25, 30, 35, 40, 47),
-                      labels=c("13 a 19", "20 a 24","25 a 29","30 a 34",
-                               "35 a 39", "40 a 46"),
+                      breaks=c(13, 19, 24, 29, 34, 39, 44, 47),
+                      labels=c("13 |- 18", "18 |- 23","23 |- 28","28 |- 33",
+                               "33 |- 38", "38 |- 43", "43 |- 47"),
                       right=FALSE)
 
   # Plota gráfico
@@ -49,7 +49,7 @@ resposta <- function(df) {
     # Nomes dos eixos, título e subtítulo
     labs(x = NULL, y = NULL,
                title = titulo,
-               subtitle = 'Registrados no Brasil em 2016',
+#              subtitle = 'Registrados no Brasil em 2016',
                caption = 'Fonte: SINASC 2016')
     # Grava figura em disco para uso no Word (veja no diretório png)
     grafico$gravaEmDisco(questao, titulo, altura = 6, largura = 10)
@@ -66,11 +66,25 @@ resposta <- function(df) {
       # Nomes dos eixos, título e subtítulo
       labs(x = 'Faixa etária (anos)', y = NULL,
            title = titulo,
-           subtitle = 'Registrados no Brasil em 2016',
+#           subtitle = 'Registrados no Brasil em 2016',
            caption = 'Fonte: SINASC 2016') +
       theme(legend.title = element_blank(), legend.position = "top")
       grafico$gravaEmDisco(questao, titulo, altura = 10)
 }
 
+# gerando tabela para cálculo da correlação de contingência
+tab=table(df$FAIXA, df$ECA)
+
+#definindo como matriz
+tabmax=as.matrix(tab)
 
 
+#Usamos a função chisq.test para obter o valor de qui-quadrado
+# Com o valor de qui-quadrado, podemos obter o coeficiente de contingência
+C_test <- (chisq.test(tabmax, correct = F))
+X_Squared_eca <- C_test$statistic
+C_p_i = (X_Squared_eca /(X_Squared_eca + 2000))**(1/2)
+
+grafico$msgB(paste('CPI:', C_p_i))
+grafico$msgB(paste('C* para as variáveis estado civil e idade:',
+                   as.character(C_p_i/((1/2)^(1/2)))))
