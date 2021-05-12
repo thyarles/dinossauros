@@ -49,11 +49,7 @@ resposta <- function(df) {
     # Nomes dos eixos, título e subtítulo
     labs(x = NULL, y = NULL,
                title = titulo,
-<<<<<<< HEAD
-#              subtitle = 'Registrados no Brasil em 2016',
-=======
                # subtitle = 'Registrados no Brasil em 2016',
->>>>>>> 68f037a07d03796aeba19c0b2fd44e374cfcf662
                caption = 'Fonte: SINASC 2016')
     # Grava figura em disco para uso no Word (veja no diretório png)
     grafico$gravaEmDisco(questao, titulo, altura = 6, largura = 10)
@@ -70,11 +66,8 @@ resposta <- function(df) {
       # Nomes dos eixos, título e subtítulo
       labs(x = 'Faixa etária (anos)', y = NULL,
            title = titulo,
-<<<<<<< HEAD
-#           subtitle = 'Registrados no Brasil em 2016',
-=======
+
            # subtitle = 'Registrados no Brasil em 2016',
->>>>>>> 68f037a07d03796aeba19c0b2fd44e374cfcf662
            caption = 'Fonte: SINASC 2016') +
       theme(legend.title = element_blank(), legend.position = "top")
       grafico$gravaEmDisco(questao, titulo, altura = 10)
