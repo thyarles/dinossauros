@@ -70,6 +70,7 @@
  # Configrando o SEED para 1234...
 
  # Salvando amostras de cada UF no dataframe AMOSTRAS...
+   --> Salvando gráfico Observacoes por Estado no diretório png/AMOSTRA ...
 
  # Limpando dados para otimizar memória...
 
@@ -122,15 +123,15 @@
   Sum              901    1097 1998
  -----------------------------------------------------------------
  ----> Tabela: Q01 - Parto por Peso
- -----------------------------------------------------------------           
-            Vaginal Cesáreo  Sum
-  0,4 a 1,4      14      21   35
-  1,5 a 1,9      13      25   38
-  2,0 a 2,4      57      69  126
-  2,5 a 2,9     263     242  505
-  3,0 a 3,4     387     460  847
-  3,5 a 4,8     167     280  447
-  Sum           901    1097 1998
+ -----------------------------------------------------------------             
+              Vaginal Cesáreo  Sum
+  4 a 1400         13      18   31
+  1500 a 1999      13      23   36
+  2000 a 2499      50      59  109
+  2500 a 2999     234     219  453
+  3000 a 3400     393     456  849
+  3500 a 4800     198     322  520
+  Sum             901    1097 1998
  -----------------------------------------------------------------
  ----> Tabela: Q01 - Parto por Estado civil da mãe
  -----------------------------------------------------------------               
@@ -157,6 +158,8 @@
    --> Salvando gráfico Percentual do estado civil das mães por faixa etária no diretório png/q02 ...
    --> CPI: 0.318577770777836
    --> C* para as variáveis estado civil e idade: 0.450537004104602
+   --> CPP: 0.0995867883804121
+   --> C* para as variáveis tipo parto e peso: 0.140836986760758
 
  # Gerando dados para a QUESTÃO 03...
    --> Freq máxima..: 1.05%
@@ -305,4 +308,3 @@
    --> C* para as variáveis tipo de parto e Raça: 0.229009712404984
 
  ### Script executado com sucesso!
-
