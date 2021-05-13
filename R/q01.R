@@ -64,14 +64,13 @@ resposta <- function(df) {
 
   # classe pesos ----
   # Agrupamento dos pesos por classes
-  df$PESO <- round(df$PESO/1000, digits = 1)
-  df$GPESO <- cut(df$PESO, breaks = c(0.4, 1.5, 2, 2.5, 3, 3.5, 4.8),
-                           labels = c('0,4 a 1,4',
-                                      '1,5 a 1,9',
-                                      '2,0 a 2,4',
-                                      '2,5 a 2,9',
-                                      '3,0 a 3,4',
-                                      '3,5 a 4,8'))
+  df$GPESO <- cut(df$PESO, breaks = c(400, 1500, 2000, 2500, 3000, 3500, 4800),
+                           labels = c('4 a 1400',
+                                      '1500 a 1999',
+                                      '2000 a 2499',
+                                      '2500 a 2999',
+                                      '3000 a 3400',
+                                      '3500 a 4800'))
 
   # classe horas ----
   # Agrupamento das horas de nascimento

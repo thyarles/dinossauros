@@ -87,6 +87,18 @@
       }
   }
 
+  # Plota tabela
+  ggplot(AMOSTRA, aes(x = UF, fill = '')) +
+    # Gráfico tipo barras
+    geom_bar(position="dodge", show.legend = FALSE) +
+    # Escala de cor leve
+    scale_fill_brewer() +
+    # Nomes dos eixos, título e subtítulo
+    labs(x = 'Estados', y = 'Observações',
+         title = 'Observações na amostra por Estado')  +
+    sinasc$grafico$gravaEmDisco('AMOSTRA', 'Observacoes por Estado',
+                                altura = 10, largura = 20)
+
 # limpeza-----------------------------------------------------------------------
 # Limpa dataframes e variáveis não necessárias nos próximos passos
   sinasc$grafico$msgA('Limpando dados para otimizar memória')

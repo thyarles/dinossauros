@@ -82,12 +82,13 @@ resposta <- function(df, Q01) {
 
   # box-plot gestacao/peso ----
   titulo <- 'Tempo de gestação e peso'
-  ggplot(df[!is.na(df$GESTACAO), ], aes(x = GESTACAO, y = PESO, fill = '')) +
+  ggplot(df[!is.na(df$GESTACAO) & df$GESTACAO != 'Ignorado', ],
+         aes(x = GESTACAO, y = PESO, fill = '')) +
     geom_boxplot(show.legend = FALSE) +
     scale_fill_brewer() +
     labs(x = '', y = '',
          title = titulo) +
-    grafico$gravaEmDisco(questao, titulo, largura = 25)
+    grafico$gravaEmDisco(questao, titulo, largura = 20)
 
   # box-plot gravidez/peso ----
   titulo <- 'Tipo de gravidez e peso'

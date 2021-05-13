@@ -49,8 +49,8 @@ resposta <- function(df) {
     # Troca densidade numérica pelo percentual
     scale_y_continuous(labels = scales::percent) +
     # Nomes dos eixos, título e subtítulo
-    labs(x = NULL, y = NULL,
-               title = titulo,
+    labs(x = NULL, y = ' ',
+               title = 'Estado civil das mães',
                # subtitle = 'Registrados no Brasil em 2016',
                caption = 'Fonte: SINASC 2016')
     # Grava figura em disco para uso no Word (veja no diretório png)
