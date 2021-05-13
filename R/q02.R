@@ -13,7 +13,7 @@ suppressMessages(suppressWarnings(suppressPackageStartupMessages(
 export('resposta')
 
 # Define função de resposta (rode df <- AMOSTRA para testar local)
-resposta <- function(df) {
+resposta <- function(df, q1) {
 
   # Define questão para salvar gráficos na pasta certa
   questao <- 'q02'
@@ -74,7 +74,7 @@ resposta <- function(df) {
       theme(legend.title = element_blank(), legend.position = "top")
       grafico$gravaEmDisco(questao, titulo, altura = 10)
 
-  # gerando tabela para cálculo da correlação de contingência
+  # gerando tabela para cálculo da correlação de contingência Estado civil
   tab=table(df$FAIXA, df$ECA)
 
   #definindo como matriz
@@ -90,5 +90,24 @@ resposta <- function(df) {
   grafico$msgB(paste('CPI:', C_p_i))
   grafico$msgB(paste('C* para as variáveis estado civil e idade:',
                      as.character(C_p_i/((1/2)^(1/2)))))
+
+
+
+  # gerando tabela para cálculo da correlação de contingência PESO
+  tab=table(droplevels(q1$PARTO), q1$GPESO)
+
+  #definindo como matriz
+  tabmax=as.matrix(tab)
+
+
+  #Usamos a função chisq.test para obter o valor de qui-quadrado
+  # Com o valor de qui-quadrado, podemos obter o coeficiente de contingência
+  C_test <- (chisq.test(tabmax, correct = F))
+  X_Squared_gpeso <- C_test$statistic
+  C_p_p = (X_Squared_gpeso /(X_Squared_gpeso + 2000))**(1/2)
+
+  grafico$msgB(paste('CPP:', C_p_p))
+  grafico$msgB(paste('C* para as variáveis tipo parto e peso:',
+                     as.character(C_p_p/((1/2)^(1/2)))))
 
 }

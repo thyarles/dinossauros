@@ -121,13 +121,13 @@
 # 1. Pode-se dizer que o número de partos varia entre os dias da semana?
 #    Por que?
   sinasc$grafico$msgA('Gerando dados para a QUESTÃO 01')
-  Q01 <- sinasc$q01$resposta(AMOSTRA) # Salva Q01 para uso na questao 4
+  Q01 <- sinasc$q01$resposta(AMOSTRA) # Salva Q01 para uso na q2 e q4
 
 # questao2----------------------------------------------------------------------
 # 2. Qual é o percentual de mães solteiras?
 #    Descrever a variável estado civil das mães.
   sinasc$grafico$msgA('Gerando dados para a QUESTÃO 02')
-  sinasc$q02$resposta(AMOSTRA)
+  sinasc$q02$resposta(AMOSTRA, Q01)
 
 # questao3----------------------------------------------------------------------
 # 3. Descrever a variável peso do recém-nascidos da amostra.
